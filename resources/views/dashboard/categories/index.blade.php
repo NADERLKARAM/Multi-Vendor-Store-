@@ -9,6 +9,12 @@
 
 @section('content')
 
+@if (session('success'))
+<div class="alert alert-success">
+    {{ session('success') }}
+</div>
+@endif
+
  <div class="mb-5">
 
     <a href="{{ route('categories.create') }}" class="btn btn-sm btn-outline-primary mr-2">Create</a>
@@ -31,9 +37,10 @@
 <table class="table">
     <thead>
         <tr>
-            <th></th>
+            <th>Image</th>
             <th>ID</th>
             <th>Name</th>
+            <th>Description</th>
             <th>Parent</th>
             <th>Status</th>
             <th>Created At</th>
@@ -45,13 +52,14 @@
         <tr>
             <td><img src="{{ asset('storage/' . $category->image) }}" alt="" height="50"></td>
             <td>{{ $category->id }}</td>
-            <td><a href="{{ route('dashboard.categories.show', $category->id) }}">{{ $category->name }}</a></td>
-            <td>{{ $category->parent->name }}</td>
+            <td><a href="{{ route('categories.show', $category->id) }}">{{ $category->name }}</a></td>
+            <td>{{ $category->description }}</td>
+            <td>{{ $category->parent_id }}</td>
             <td>{{ $category->status }}</td>
             <td>{{ $category->created_at }}</td>
             <td>
 
-                <a href="{{ route('dashboard.categories.edit', $category->id) }}" class="btn btn-sm btn-outline-success">Edit</a>
+                <a href="{{ route('categories.edit', $category->id) }}" class="btn btn-sm btn-outline-success">Edit</a>
 
             </td>
             <td>
