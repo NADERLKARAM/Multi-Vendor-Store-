@@ -50,7 +50,13 @@
     <tbody>
         @forelse($categories as $category)
         <tr>
-            <td><img src="{{ asset('storage/' . $category->image) }}" alt="" height="50"></td>
+            <td>
+                @if ($category->image)
+                    <img src="{{ asset('storage/' . $category->image) }}" alt="{{ $category->name }}" height="50">
+                @else
+                    No Image
+                @endif
+            </td>
             <td>{{ $category->id }}</td>
             <td><a href="{{ route('categories.show', $category->id) }}">{{ $category->name }}</a></td>
             <td>{{ $category->description }}</td>
