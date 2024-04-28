@@ -15,24 +15,20 @@
 </div>
 @endif
 
- <div class="mb-5">
-
+<div class="mb-5">
     <a href="{{ route('categories.create') }}" class="btn btn-sm btn-outline-primary mr-2">Create</a>
-
 </div>
-{{--
-<x-alert type="success" />
-<x-alert type="info" />
 
-<form action="{{ URL::current() }}" method="get" class="d-flex justify-content-between mb-4">
-    <x-form.input name="name" placeholder="Name" class="mx-2" :value="request('name')" />
-    <select name="status" class="form-control mx-2">
-        <option value="">All</option>
-        <option value="active" @selected(request('status') == 'active')>Active</option>
-        <option value="archived" @selected(request('status') == 'archived')>Archived</option>
-    </select>
-    <button class="btn btn-dark mx-2">Filter</button>
-</form> --}}
+<div class="mb-3">
+    <form action="{{ route('categories.index') }}" method="GET">
+        <div class="input-group">
+            <input type="text" class="form-control" placeholder="Search categories" name="search" value="{{ request('search') }}">
+            <div class="input-group-append">
+                <button class="btn btn-outline-secondary" type="submit">Search</button>
+            </div>
+        </div>
+    </form>
+</div>
 
 <table class="table">
     <thead>
@@ -64,12 +60,9 @@
             <td>{{ $category->status }}</td>
             <td>{{ $category->created_at }}</td>
             <td>
-
                 <a href="{{ route('categories.edit', $category->id) }}" class="btn btn-sm btn-outline-success">Edit</a>
-
             </td>
             <td>
-
                 <form action="{{ route('categories.destroy', $category->id) }}" method="post">
                     @csrf
                     <!-- Form Method Spoofing -->
@@ -77,7 +70,6 @@
                     @method('delete')
                     <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
                 </form>
-
             </td>
         </tr>
         @empty
@@ -88,7 +80,9 @@
     </tbody>
 </table>
 
-{{-- {{ $categories->withQueryString()->appends(['search' => 1])->links() }} --}}
+<!-- Pagination links -->
+{{ $categories->links() }}
+
+
 
 @endsection
-

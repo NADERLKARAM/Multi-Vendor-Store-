@@ -15,9 +15,12 @@ class CategoriesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $categories = Category::all();
+        $search = $request->input('search');
+        $categories = Category::where('name', 'like', '%' . $search . '%')
+            ->orWhere('description', 'like', '%' . $search . '%')
+            ->paginate(2); // Fetch 10 categories per page
         return view('dashboard.categories.index',compact('categories'));
     }
 
@@ -43,9 +46,9 @@ class CategoriesController extends Controller
     public function store(Request $request)
     {
        $request->validate([
-        'name' => 'required|string|max:255',
+        'name' => 'required|string|max:255|unique:categories',
             'description' => 'nullable|string',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
             'status' => 'required|in:active,archived',
        ]);
 
