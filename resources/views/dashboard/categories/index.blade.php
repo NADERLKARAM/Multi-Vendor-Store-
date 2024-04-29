@@ -17,6 +17,7 @@
 
 <div class="mb-5">
     <a href="{{ route('categories.create') }}" class="btn btn-sm btn-outline-primary mr-2">Create</a>
+    <a href="{{ route('categories.trash') }}" class="btn btn-sm btn-outline-secondary">View Trashed Categories</a>
 </div>
 
 <div class="mb-3">
@@ -29,6 +30,27 @@
         </div>
     </form>
 </div>
+
+<!-- Ordering Controls -->
+<div class="mb-3">
+    <strong>Order by:</strong>
+    <form action="{{ route('categories.index') }}" method="GET" class="form-inline">
+        <div class="input-group">
+            <select class="form-control" name="order_by">
+                <option value="name" {{ request('order_by') == 'name' ? 'selected' : '' }}>Name</option>
+                <option value="created_at" {{ request('order_by') == 'created_at' ? 'selected' : '' }}>Created At</option>
+            </select>
+            <select class="form-control" name="order_direction">
+                <option value="asc" {{ request('order_direction') == 'asc' ? 'selected' : '' }}>Ascending</option>
+                <option value="desc" {{ request('order_direction') == 'desc' ? 'selected' : '' }}>Descending</option>
+            </select>
+            <div class="input-group-append">
+                <button class="btn btn-primary" type="submit">Apply</button>
+            </div>
+        </div>
+    </form>
+</div>
+
 
 <table class="table">
     <thead>
@@ -56,19 +78,19 @@
             <td>{{ $category->id }}</td>
             <td><a href="{{ route('categories.show', $category->id) }}">{{ $category->name }}</a></td>
             <td>{{ $category->description }}</td>
-            <td>{{ $category->parent_id }}</td>
+            <td>{{ $category->parent_name}}</td>
             <td>{{ $category->status }}</td>
             <td>{{ $category->created_at }}</td>
             <td>
                 <a href="{{ route('categories.edit', $category->id) }}" class="btn btn-sm btn-outline-success">Edit</a>
             </td>
             <td>
-                <form action="{{ route('categories.destroy', $category->id) }}" method="post">
+                <form id="delete-form-{{ $category->id }}" action="{{ route('categories.destroy', $category->id) }}" method="post">
                     @csrf
                     <!-- Form Method Spoofing -->
                     <input type="hidden" name="_method" value="delete">
                     @method('delete')
-                    <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
+                    <button type="button" class="btn btn-sm btn-outline-danger" onclick="confirmDelete('{{ $category->id }}')">Delete</button>
                 </form>
             </td>
         </tr>
@@ -82,6 +104,16 @@
 
 <!-- Pagination links -->
 {{ $categories->links() }}
+
+
+
+<script>
+    function confirmDelete(categoryId) {
+        if (confirm('Are you sure you want to delete this category?')) {
+            document.getElementById('delete-form-' + categoryId).submit();
+        }
+    }
+</script>
 
 
 

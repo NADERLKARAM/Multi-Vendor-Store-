@@ -18,10 +18,25 @@ class CategoriesController extends Controller
     public function index(Request $request)
     {
         $search = $request->input('search');
-        $categories = Category::where('name', 'like', '%' . $search . '%')
-            ->orWhere('description', 'like', '%' . $search . '%')
-            ->paginate(2); // Fetch 10 categories per page
-        return view('dashboard.categories.index',compact('categories'));
+    $orderBy = $request->input('order_by', 'name'); // Default ordering by name
+    $orderDirection = $request->input('order_direction', 'asc'); // Default order direction ascending
+
+    // Query categories with parent names
+    $categories = Category::leftJoin('categories as parent', 'categories.parent_id', '=', 'parent.id')
+        ->select('categories.*', 'parent.name as parent_name');
+
+    if ($search) {
+        $categories->where('categories.name', 'like', '%' . $search . '%')
+            ->orWhere('categories.description', 'like', '%' . $search . '%');
+    }
+
+    // Apply ordering
+    $categories->orderBy($orderBy, $orderDirection);
+
+    // Paginate the results
+    $categories = $categories->paginate(10); // Fetch 10 categories per page
+
+    return view('dashboard.categories.index', compact('categories'));
     }
 
     /**
@@ -159,5 +174,39 @@ class CategoriesController extends Controller
         // Optionally, you may also delete associated images or perform other cleanup tasks
 
         return redirect()->route('categories.index')->with('success', 'Category deleted successfully');
+    }
+
+
+
+
+    public function trash(){
+        $trashedCategories = Category::onlyTrashed()->get();
+        return view('dashboard.categories.trash', compact('trashedCategories'));
+    }
+
+
+    public function restore($id){
+
+        $category = Category::withTrashed()->findOrFail($id);
+        $category->restore();
+
+        return redirect()->route('categories.index')->with('success', 'Category restored successfully');
+
+    }
+
+
+    public function forceDelete($id)
+    {
+        $category = Category::withTrashed()->findOrFail($id);
+
+        // Delete the image if it exists
+        if ($category->image) {
+            Storage::delete($category->image);
+        }
+
+        // Force delete the category
+        $category->forceDelete();
+
+        return redirect()->route('categories.index')->with('success', 'Category  deleted');
     }
 }
