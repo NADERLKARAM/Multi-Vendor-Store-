@@ -16,11 +16,11 @@ return [
         'ability' => 'categories.view',
     ],
     [
-        'icon' => 'fas fa-tags nav-icon',
-        'route' => 'categories.index',
+        'icon' => 'fas fa-box nav-icon',
+        'route' => 'products.index',
         'title' => 'Products',
         'active' => 'products.*',
-        'ability' => 'categories.view',
+        'ability' => 'products.view',
     ],
     [
         'icon' => 'fas fa-receipt nav-icon',

@@ -63,7 +63,7 @@ class CategoriesController extends Controller
        $request->validate([
         'name' => 'required|string|max:255|unique:categories',
             'description' => 'nullable|string',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'status' => 'required|in:active,archived',
        ]);
 
@@ -138,10 +138,10 @@ class CategoriesController extends Controller
 
         ]);
 
-        // Remove the old image if a new one is uploaded
-        if ($request->hasFile('image')) {
-            Storage::delete($category->image);
-        }
+        // // Remove the old image if a new one is uploaded
+        // if ($request->hasFile('image')) {
+        //     Storage::delete($category->image);
+        // }
 
         // Update the category
         $category->update($request->except('image'));
