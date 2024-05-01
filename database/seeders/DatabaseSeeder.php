@@ -18,11 +18,10 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-         // Set memory limit
-         ini_set('memory_limit', '1024M');
+ 
         // \App\Models\User::factory(10)->create();
         Category::factory(10)->create();
         Store::factory(5)->create();
-        Product::factory(20)->create();
+        // Product::factory(20)->create();
     }
 }
