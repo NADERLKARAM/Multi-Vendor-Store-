@@ -41,4 +41,11 @@ class Product extends Model
     {
         return $this->belongsToMany(Tag::class);
     }
+
+    public function attachTags($tagNames)
+    {
+        foreach ($tagNames as $tagName) {
+            $tag = Tag::firstOrCreate(['name' => $tagName]);
+            $this->tags()->attach($tag->id);
+        }}
 }
