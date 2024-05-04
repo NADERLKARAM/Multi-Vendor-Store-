@@ -5,6 +5,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Dashboard\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Front\HomeController;
+use App\Http\Controllers\Front\FProductController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,21 +21,27 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index']);
 
+Route::get('/product-details/{product}', [FProductController::class, 'show'])->name('product-details');
 
 
-Route::get('categories/trash', [CategoriesController::class, 'trash'])->name('categories.trash');
-Route::put('categories/{id}/restore', [CategoriesController::class, 'restore'])->name('categories.restore');
-Route::delete('categories/{id}/force-delete', [CategoriesController::class, 'forceDelete'])->name('categories.force-delete');
-
-Route::resource('categories', CategoriesController::class);
-
-
-Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
-
+// Categories routes
+Route::middleware(['auth', 'checkRole:admin,superAdmin'])->group(function () {
+    Route::get('categories/trash', [CategoriesController::class, 'trash'])->name('categories.trash');
+    Route::put('categories/{id}/restore', [CategoriesController::class, 'restore'])->name('categories.restore');
+    Route::delete('categories/{id}/force-delete', [CategoriesController::class, 'forceDelete'])->name('categories.force-delete');
+    Route::resource('categories', CategoriesController::class);
+});
 
 
-Route::resource('products', ProductController::class);
 
+Route::get('/dashboard', [DashboardController::class, 'index'])
+    ->middleware(['auth', 'checkRole:admin,superAdmin'])
+    ->name('dashboard');
+
+
+    Route::middleware(['auth', 'checkRole:admin,superAdmin'])->group(function () {
+        Route::resource('products', ProductController::class);
+    });
 
 
 

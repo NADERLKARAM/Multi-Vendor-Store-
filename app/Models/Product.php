@@ -47,5 +47,17 @@ class Product extends Model
         foreach ($tagNames as $tagName) {
             $tag = Tag::firstOrCreate(['name' => $tagName]);
             $this->tags()->attach($tag->id);
-        }}
+        }
+    }
+
+    public function save(array $options = [])
+    {
+        // Generate the slug based on the product name if it's not already set
+        if (!isset($this->attributes['slug']) || $this->attributes['slug'] === null) {
+            $this->attributes['slug'] = Str::slug($this->attributes['name']);
+        }
+
+        // Call the parent save method
+        return parent::save($options);
+    }
 }

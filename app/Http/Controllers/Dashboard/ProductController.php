@@ -43,47 +43,53 @@ class ProductController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        // Validate the incoming request data
-        $validatedData = $request->validate([
-            'store_id' => 'required|exists:stores,id',
-            'category_id' => 'nullable|exists:categories,id',
-            'name' => 'required|string|max:255',
-            'description' => 'required|string',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'price' => 'required|numeric|min:0',
-            'compare_price' => 'nullable|numeric|min:0',
-            'options' => 'nullable|json',
-            'rating' => 'nullable|numeric|min:0|max:5',
-            'featured' => 'boolean',
-            'status' => 'required|in:active,draft,archived',
-            'tags' => 'nullable|string', // Adjust validation rule for tags
-        ]);
+{
+    // Validate the incoming request data
+    $validatedData = $request->validate([
+        'store_id' => 'required|exists:stores,id',
+        'category_id' => 'nullable|exists:categories,id',
+        'name' => 'required|string|max:255',
+        'description' => 'required|string',
+        'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        'price' => 'required|numeric|min:0',
+        'compare_price' => 'nullable|numeric|min:0',
+        'options' => 'nullable|json',
+        'rating' => 'nullable|numeric|min:0|max:5',
+        'featured' => 'boolean',
+        'status' => 'required|in:active,draft,archived',
+        'tags' => 'nullable|string', // Adjust validation rule for tags
+    ]);
 
-        // Handle image upload if provided
-        if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('product_images');
-            $validatedData['image'] = $imagePath;
-        }
-
-        // Create the product
-        $product = new Product($validatedData);
-
-        // Generate the slug based on the product name
-        $product->slug = Str::slug($validatedData['name']);
-
-        // Save the product to the database
-        $product->save();
-
-        // Attach tags to the product if provided
-        if (!empty($validatedData['tags'])) {
-            $tagNames = explode(',', $validatedData['tags']);
-            $product->attachTags($tagNames);
-        }
-
-        return redirect()->route('products.index')->with('success', 'Product created successfully');
+    // Handle image upload if provided
+    if ($request->hasFile('image')) {
+        $imagePath = $request->file('image')->store('product_images');
+        $validatedData['image'] = $imagePath;
     }
 
+    // Generate the slug based on the product name
+    $slug = Str::slug($validatedData['name']);
+
+    // Check if the slug already exists
+    $count = Product::where('slug', $slug)->count();
+    if ($count > 0) {
+        // Append a unique identifier to the slug
+        $slug .= '-' . ($count + 1);
+    }
+
+    // Add the slug to the validated data
+    $validatedData['slug'] = $slug;
+
+    // Create the product
+    $product = Product::create($validatedData);
+
+    // Attach tags to the product if provided
+    if (!empty($validatedData['tags'])) {
+        $tagNames = explode(',', $validatedData['tags']);
+        $product->attachTags($tagNames);
+    }
+
+    return redirect()->route('products.index')->with('success', 'Product created successfully');
+}
     /**
      * Display the specified resource.
      *
@@ -166,6 +172,19 @@ class ProductController extends Controller
 
     return redirect()->route('products.index')->with('success', 'Product updated successfully');
 
+    }
+
+
+    public function destroy(Product $product)
+    {
+        // Check if the authenticated user can delete the product
+        // You may add additional authorization logic here if needed
+
+        // Delete the product
+        $product->delete();
+
+        // Redirect back with a success message
+        return redirect()->route('products.index')->with('success', 'Product deleted successfully.');
     }
 
 
