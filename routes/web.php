@@ -6,6 +6,7 @@ use App\Http\Controllers\Dashboard\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Front\HomeController;
 use App\Http\Controllers\Front\FProductController;
+use App\Http\Controllers\Front\CartController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -42,6 +43,9 @@ Route::get('/dashboard', [DashboardController::class, 'index'])
     Route::middleware(['auth', 'checkRole:admin,superAdmin'])->group(function () {
         Route::resource('products', ProductController::class);
     });
+
+
+    Route::resource('cart', CartController::class);
 
 
 

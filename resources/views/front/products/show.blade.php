@@ -35,7 +35,9 @@
                         <div class="product-images">
                             <main id="gallery">
                                 <div class="main-img">
-                                    <img src="https://via.placeholder.com/1000x670" id="current" alt="#">
+                                    <a href="/products/{{ $product->id }}"><img
+                                        style="max-height: 250px;min-height:250px" src="{{ asset('storage/' . $product->image) }}"
+                                        alt=""></a>
                                 </div>
                                 <div class="images">
                                     <img src="https://via.placeholder.com/1000x670" class="img" alt="#">

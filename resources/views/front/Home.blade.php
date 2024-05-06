@@ -222,15 +222,21 @@
                     <!-- Start Single Product -->
                     <div class="single-product">
                         <div class="product-image">
-                            <img src="https://via.placeholder.com/335x335" alt="#">
+                            <a href="/products/{{ $product->id }}"><img
+                                style="max-height: 250px;min-height:250px" src="{{ asset('storage/' . $product->image) }}"
+                                alt=""></a>
                             <div class="button">
                                 <a href="{{ route('product-details', ['product' => $product->id]) }}" class="btn"><i class="lni lni-cart"></i> Add to Cart</a>
                             </div>
                         </div>
                         <div class="product-info">
-                            <span class="category">Watches</span>
+                            @if ($product->category)
+                                    <a href="javascript:void(0)">{{ $product->category->name }}</a>
+                                @else
+                                    No category assigned
+                                @endif
                             <h4 class="title">
-                                <a href="product-grids.html">Xiaomi Mi Band 5</a>
+                                <a href="{{ route('product-details', ['product' => $product->id]) }}">{{ $product->name}}</a>
                             </h4>
                             <ul class="review">
                                 <li><i class="lni lni-star-filled"></i></li>
