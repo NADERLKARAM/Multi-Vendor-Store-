@@ -48,13 +48,13 @@ class ProductController extends Controller
         $validatedData = $request->validate([
             'store_id' => 'required|exists:stores,id',
             'category_id' => 'nullable|exists:categories,id',
-            'name' => 'required|string|max:255',
+            'name' => 'required|string|max:255|unique:products,name',
             'description' => 'required|string',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Updated image validation rule
             'price' => 'required|numeric|min:0',
             'compare_price' => 'nullable|numeric|min:0',
             'options' => 'nullable|json',
-            'rating' => 'nullable|numeric|min:0|max:5',
+            'rating' => 'required',
             'featured' => 'boolean',
             'status' => 'required|in:active,draft,archived',
             'tags' => 'nullable|string',
@@ -137,7 +137,7 @@ class ProductController extends Controller
     $validatedData = $request->validate([
         'store_id' => 'required|exists:stores,id',
         'category_id' => 'nullable|exists:categories,id',
-        'name' => 'required|string|max:255',
+        'name' => 'required|string|max:255|unique:products,name',
         'description' => 'required|string',
         'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         'price' => 'required|numeric|min:0',

@@ -166,6 +166,7 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
         App\Providers\PaginationServiceProvider::class,
+        App\Providers\CartServiceProvider::class,
 
         /*
          * Package Service Providers...

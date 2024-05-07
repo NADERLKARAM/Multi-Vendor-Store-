@@ -8,14 +8,14 @@ use App\Repositories\Cart\CartModelRepository;
 use App\Repositories\Cart\CartRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
-class CartController extends Controller {
 
+class CartController extends Controller
+{
     protected $cart;
 
-    public function __construct(CartRepository $cart){
-
+    public function __construct(CartRepository $cart)
+    {
         $this->cart = $cart;
-
     }
 
     public function index()
@@ -57,7 +57,6 @@ class CartController extends Controller {
         $this->cart->update($id, $request->post('quantity'));
     }
 
-
     public function destroy($id)
     {
         $this->cart->delete($id);
@@ -66,5 +65,4 @@ class CartController extends Controller {
             'message' => 'Item deleted!',
         ];
     }
-
- }
+}

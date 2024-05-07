@@ -130,7 +130,7 @@ class CategoriesController extends Controller
          // Fetch the category by ID
     $category = Category::findOrFail($id);
         $request->validate([
-            'name' => 'required|string|max:255',
+            'name' => 'required|string|max:255|unique:categories,name',
             'description' => 'nullable|string',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'status' => 'required|in:active,archived',

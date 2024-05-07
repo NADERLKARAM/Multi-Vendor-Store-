@@ -15,8 +15,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-     // Bind CartRepository for CartRepository interface
-     $this->app->bind(CartRepository::class, CartModelRepository::class);
+     
     }
 
     /**

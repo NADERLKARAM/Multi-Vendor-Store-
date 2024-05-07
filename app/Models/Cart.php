@@ -29,6 +29,7 @@ class Cart extends Model
             $builder->where('cookie_id', '=', Cart::getCookieId());
         });
 
+
     }
 
 
