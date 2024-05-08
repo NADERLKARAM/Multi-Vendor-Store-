@@ -39,13 +39,13 @@
                                         style="max-height: 250px;min-height:250px" src="{{ asset('storage/' . $product->image) }}"
                                         alt=""></a>
                                 </div>
-                                <div class="images">
+                                {{-- <div class="images">
                                     <img src="https://via.placeholder.com/1000x670" class="img" alt="#">
                                     <img src="https://via.placeholder.com/1000x670" class="img" alt="#">
                                     <img src="https://via.placeholder.com/1000x670" class="img" alt="#">
                                     <img src="https://via.placeholder.com/1000x670" class="img" alt="#">
                                     <img src="https://via.placeholder.com/1000x670" class="img" alt="#">
-                                </div>
+                                </div> --}}
                             </main>
                         </div>
                     </div>
