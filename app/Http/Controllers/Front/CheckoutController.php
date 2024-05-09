@@ -65,7 +65,6 @@ class CheckoutController extends Controller
                 }
             }
 
-            // Clear the cart after completing the order
             event(new OrderCreated($order));
 
             DB::commit();
