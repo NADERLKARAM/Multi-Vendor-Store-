@@ -65,16 +65,15 @@ class CheckoutController extends Controller
                 }
             }
 
+            // Clear the cart after completing the order
+            event(new OrderCreated($order));
+
             DB::commit();
-
-            // //event('order.created', $order, Auth::user());
-            // event(new OrderCreated($order));
-
         } catch (Throwable $e) {
             DB::rollBack();
             throw $e;
         }
 
-        return redirect()->route('orders.payments.create', $order->id);
+        return redirect()->route('checkout');
     }
 }

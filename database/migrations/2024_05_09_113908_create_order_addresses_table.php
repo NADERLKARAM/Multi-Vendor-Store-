@@ -15,16 +15,18 @@ return new class extends Migration
     {
         Schema::create('order_addresses', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('order_id')->constrained('orders')->cascadeOnDelete();
-            $table->foreignId('product_id')->nullable()
-                ->constrained('products')
-                ->nullOnDelete();
-            $table->string('product_name');
-            $table->float('price');
-            $table->unsignedSmallInteger('quantity')->default(1);
-            $table->json('options')->nullable();
-
-            $table->unique(['order_id', 'product_id']);
+            $table->foreignId('order_id')->constrained('orders')
+                ->cascadeOnDelete();
+            $table->enum('type', ['billing', 'shipping']);
+            $table->string('first_name');
+            $table->string('last_name');
+            $table->string('email')->nullable();
+            $table->string('phone_number');
+            $table->string('street_address');
+            $table->string('city');
+            $table->string('postal_code')->nullable();
+            $table->string('state')->nullable();
+            $table->char('country', 2);
         });
     }
 
