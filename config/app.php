@@ -167,6 +167,7 @@ return [
         Illuminate\View\ViewServiceProvider::class,
         App\Providers\PaginationServiceProvider::class,
         App\Providers\CartServiceProvider::class,
+        Laravel\Fortify\FortifyServiceProvider::class,
 
         /*
          * Package Service Providers...

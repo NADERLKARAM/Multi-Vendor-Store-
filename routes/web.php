@@ -36,8 +36,8 @@ Route::middleware(['auth', 'checkRole:admin,superAdmin'])->group(function () {
 
 
 
-Route::get('/dashboard', [DashboardController::class, 'index'])
-    ->middleware(['auth', 'checkRole:admin,superAdmin'])
+Route::get('admin/dashboard', [DashboardController::class, 'index'])
+    ->middleware(['auth', 'checkRole:admin,web'])
     ->name('dashboard');
 
 
@@ -60,4 +60,4 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+// require __DIR__.'/auth.php';
