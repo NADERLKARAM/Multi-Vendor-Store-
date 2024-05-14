@@ -2,6 +2,7 @@
 
 
 @section('content')
+
     <!-- Start Hero Area -->
     <section class="hero-area">
         <div class="container">
