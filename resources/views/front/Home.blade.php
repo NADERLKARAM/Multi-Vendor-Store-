@@ -95,11 +95,13 @@
                     </div>
                 </div>
             </div>
+
             <div class="row">
+                @foreach ($categories as $category )
                 <div class="col-lg-4 col-md-6 col-12">
                     <!-- Start Single Category -->
                     <div class="single-category">
-                        <h3 class="heading">TV & Audios</h3>
+                        <h3 class="heading">{{ $category->name }}</h3>
                         <ul>
                             <li><a href="product-grids.html">Smart Television</a></li>
                             <li><a href="product-grids.html">QLED TV</a></li>
@@ -108,96 +110,13 @@
                             <li><a href="product-grids.html">View All</a></li>
                         </ul>
                         <div class="images">
-                            <img src="https://via.placeholder.com/180x180" alt="#">
+                            <img  style="width: 200px; height: 240px;" src="{{ asset('storage/' . $category->image) }}" alt="{{ $category->name }}">
                         </div>
                     </div>
                     <!-- End Single Category -->
                 </div>
-                <div class="col-lg-4 col-md-6 col-12">
-                    <!-- Start Single Category -->
-                    <div class="single-category">
-                        <h3 class="heading">Desktop & Laptop</h3>
-                        <ul>
-                            <li><a href="product-grids.html">Smart Television</a></li>
-                            <li><a href="product-grids.html">QLED TV</a></li>
-                            <li><a href="product-grids.html">Audios</a></li>
-                            <li><a href="product-grids.html">Headphones</a></li>
-                            <li><a href="product-grids.html">View All</a></li>
-                        </ul>
-                        <div class="images">
-                            <img src="https://via.placeholder.com/180x180" alt="#">
-                        </div>
-                    </div>
-                    <!-- End Single Category -->
-                </div>
-                <div class="col-lg-4 col-md-6 col-12">
-                    <!-- Start Single Category -->
-                    <div class="single-category">
-                        <h3 class="heading">Cctv Camera</h3>
-                        <ul>
-                            <li><a href="product-grids.html">Smart Television</a></li>
-                            <li><a href="product-grids.html">QLED TV</a></li>
-                            <li><a href="product-grids.html">Audios</a></li>
-                            <li><a href="product-grids.html">Headphones</a></li>
-                            <li><a href="product-grids.html">View All</a></li>
-                        </ul>
-                        <div class="images">
-                            <img src="https://via.placeholder.com/180x180" alt="#">
-                        </div>
-                    </div>
-                    <!-- End Single Category -->
-                </div>
-                <div class="col-lg-4 col-md-6 col-12">
-                    <!-- Start Single Category -->
-                    <div class="single-category">
-                        <h3 class="heading">Dslr Camera</h3>
-                        <ul>
-                            <li><a href="product-grids.html">Smart Television</a></li>
-                            <li><a href="product-grids.html">QLED TV</a></li>
-                            <li><a href="product-grids.html">Audios</a></li>
-                            <li><a href="product-grids.html">Headphones</a></li>
-                            <li><a href="product-grids.html">View All</a></li>
-                        </ul>
-                        <div class="images">
-                            <img src="https://via.placeholder.com/180x180" alt="#">
-                        </div>
-                    </div>
-                    <!-- End Single Category -->
-                </div>
-                <div class="col-lg-4 col-md-6 col-12">
-                    <!-- Start Single Category -->
-                    <div class="single-category">
-                        <h3 class="heading">Smart Phones</h3>
-                        <ul>
-                            <li><a href="product-grids.html">Smart Television</a></li>
-                            <li><a href="product-grids.html">QLED TV</a></li>
-                            <li><a href="product-grids.html">Audios</a></li>
-                            <li><a href="product-grids.html">Headphones</a></li>
-                            <li><a href="product-grids.html">View All</a></li>
-                        </ul>
-                        <div class="images">
-                            <img src="https://via.placeholder.com/180x180" alt="#">
-                        </div>
-                    </div>
-                    <!-- End Single Category -->
-                </div>
-                <div class="col-lg-4 col-md-6 col-12">
-                    <!-- Start Single Category -->
-                    <div class="single-category">
-                        <h3 class="heading">Game Console</h3>
-                        <ul>
-                            <li><a href="product-grids.html">Smart Television</a></li>
-                            <li><a href="product-grids.html">QLED TV</a></li>
-                            <li><a href="product-grids.html">Audios</a></li>
-                            <li><a href="product-grids.html">Headphones</a></li>
-                            <li><a href="product-grids.html">View All</a></li>
-                        </ul>
-                        <div class="images">
-                            <img src="https://via.placeholder.com/180x180" alt="#">
-                        </div>
-                    </div>
-                    <!-- End Single Category -->
-                </div>
+
+                @endforeach
             </div>
         </div>
     </section>
@@ -224,7 +143,7 @@
                     <div class="single-product">
                         <div class="product-image">
                             <a href="/products/{{ $product->id }}"><img
-                                style="max-height: 250px;min-height:250px" src="{{ asset('storage/' . $product->image) }}"
+ src="{{ asset('storage/' . $product->image) }}"
                                 alt=""></a>
                             <div class="button">
                                 <a href="{{ route('product-details', ['product' => $product->id]) }}" class="btn"><i class="lni lni-cart"></i> Add to Cart</a>
@@ -263,38 +182,7 @@
     </section>
     <!-- End Trending Product Area -->
 
-    <!-- Start Banner Area -->
-    <section class="banner section">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-6 col-md-6 col-12">
-                    <div class="single-banner" style="background-image:url('https://via.placeholder.com/620x340')">
-                        <div class="content">
-                            <h2>Smart Watch 2.0</h2>
-                            <p>Space Gray Aluminum Case with <br>Black/Volt Real Sport Band </p>
-                            <div class="button">
-                                <a href="product-grids.html" class="btn">View Details</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6 col-md-6 col-12">
-                    <div class="single-banner custom-responsive-margin"
-                        style="background-image:url('https://via.placeholder.com/620x340')">
-                        <div class="content">
-                            <h2>Smart Headphone</h2>
-                            <p>Lorem ipsum dolor sit amet, <br>eiusmod tempor
-                                incididunt ut labore.</p>
-                            <div class="button">
-                                <a href="product-grids.html" class="btn">Shop Now</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- End Banner Area -->
+
 
     <!-- Start Special Offer -->
     <section class="special-offer section">
@@ -645,138 +533,8 @@
     </div>
     <!-- End Brands Area -->
 
-    <!-- Start Blog Section Area -->
-    <section class="blog-section section">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="section-title">
-                        <h2>Our Latest News</h2>
-                        <p>There are many variations of passages of Lorem
-                            Ipsum available, but the majority have suffered alteration in some form.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-4 col-md-6 col-12">
-                    <!-- Start Single Blog -->
-                    <div class="single-blog">
-                        <div class="blog-img">
-                            <a href="blog-single-sidebar.html">
-                                <img src="https://via.placeholder.com/370x215" alt="#">
-                            </a>
-                        </div>
-                        <div class="blog-content">
-                            <a class="category" href="javascript:void(0)">eCommerce</a>
-                            <h4>
-                                <a href="blog-single-sidebar.html">What information is needed for shipping?</a>
-                            </h4>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                                incididunt.</p>
-                            <div class="button">
-                                <a href="javascript:void(0)" class="btn">Read More</a>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- End Single Blog -->
-                </div>
-                <div class="col-lg-4 col-md-6 col-12">
-                    <!-- Start Single Blog -->
-                    <div class="single-blog">
-                        <div class="blog-img">
-                            <a href="blog-single-sidebar.html">
-                                <img src="https://via.placeholder.com/370x215" alt="#">
-                            </a>
-                        </div>
-                        <div class="blog-content">
-                            <a class="category" href="javascript:void(0)">Gaming</a>
-                            <h4>
-                                <a href="blog-single-sidebar.html">Interesting fact about gaming consoles</a>
-                            </h4>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                                incididunt.</p>
-                            <div class="button">
-                                <a href="javascript:void(0)" class="btn">Read More</a>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- End Single Blog -->
-                </div>
-                <div class="col-lg-4 col-md-6 col-12">
-                    <!-- Start Single Blog -->
-                    <div class="single-blog">
-                        <div class="blog-img">
-                            <a href="blog-single-sidebar.html">
-                                <img src="https://via.placeholder.com/370x215" alt="#">
-                            </a>
-                        </div>
-                        <div class="blog-content">
-                            <a class="category" href="javascript:void(0)">Electronic</a>
-                            <h4>
-                                <a href="blog-single-sidebar.html">Electronics, instrumentation & control engineering
-                                </a>
-                            </h4>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                                incididunt.</p>
-                            <div class="button">
-                                <a href="javascript:void(0)" class="btn">Read More</a>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- End Single Blog -->
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- End Blog Section Area -->
 
-    <!-- Start Shipping Info -->
-    <section class="shipping-info">
-        <div class="container">
-            <ul>
-                <!-- Free Shipping -->
-                <li>
-                    <div class="media-icon">
-                        <i class="lni lni-delivery"></i>
-                    </div>
-                    <div class="media-body">
-                        <h5>Free Shipping</h5>
-                        <span>On order over $99</span>
-                    </div>
-                </li>
-                <!-- Money Return -->
-                <li>
-                    <div class="media-icon">
-                        <i class="lni lni-support"></i>
-                    </div>
-                    <div class="media-body">
-                        <h5>24/7 Support.</h5>
-                        <span>Live Chat Or Call.</span>
-                    </div>
-                </li>
-                <!-- Support 24/7 -->
-                <li>
-                    <div class="media-icon">
-                        <i class="lni lni-credit-cards"></i>
-                    </div>
-                    <div class="media-body">
-                        <h5>Online Payment.</h5>
-                        <span>Secure Payment Services.</span>
-                    </div>
-                </li>
-                <!-- Safe Payment -->
-                <li>
-                    <div class="media-icon">
-                        <i class="lni lni-reload"></i>
-                    </div>
-                    <div class="media-body">
-                        <h5>Easy Return.</h5>
-                        <span>Hassle Free Shopping.</span>
-                    </div>
-                </li>
-            </ul>
-        </div>
-    </section>
-    <!-- End Shipping Info -->
 
-@endsection
+
+
+    @endsection

@@ -10,6 +10,10 @@ use App\Http\Controllers\Front\FProductController;
 use App\Http\Controllers\Front\CheckoutController;
 use App\Http\Controllers\Front\CartController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HeroSectionController;
+
+use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -21,6 +25,11 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+Route::group([
+    'prefix' => LaravelLocalization::setLocale(),
+    'middleware' => [ 'localeSessionRedirect', 'localizationRedirect', 'localeViewPath' ]
+], function() {
 
 Route::get('/', [HomeController::class, 'index']);
 
@@ -64,4 +73,6 @@ Route::middleware('auth')->group(function () {
 Route::get('auth/user/2fa', [TwoFactorAuthentcationController::class, 'index'])
 ->name('front.2fa');
 
+
 // require __DIR__.'/auth.php';
+});

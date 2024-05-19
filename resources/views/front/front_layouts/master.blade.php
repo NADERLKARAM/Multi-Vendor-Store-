@@ -63,15 +63,16 @@
                                     </div>
                                 </li>
                                 <li>
-                                    {{-- <div class="select-position">
-                                        <form action="{{ URL::current() }}" method="get">
-                                            <select name="locale" onchange="this.form.submit()">
-                                                @foreach(LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
-                                                    <option value="{{ $localeCode }}" @selected($localeCode == App::currentLocale())>{{ $properties['native'] }}</option>
-                                                @endforeach
-                                            </select>
-                                        </form>
-                                    </div> --}}
+                                    <ul>
+                                        @foreach(LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
+                                            <li>
+                                                <a rel="alternate" hreflang="{{ $localeCode }}" href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}">
+                                                    {{ $properties['native'] }}
+                                                </a>
+                                            </li>
+                                        @endforeach
+                                    </ul>
+
                                 </li>
                             </ul>
                         </div>
@@ -79,7 +80,7 @@
                     <div class="col-lg-4 col-md-4 col-12">
                         <div class="top-middle">
                             <ul class="useful-links">
-                                <li><a href="index.html">{{ trans('Home') }}</a></li>
+                                <li><a href="/">{{ trans('Home') }}</a></li>
                                 <li><a href="about-us.html">@lang('About Us')</a></li>
                                 <li><a href="contact.html">{{ __('Contact Us') }}</a></li>
                             </ul>
@@ -187,6 +188,7 @@
             <div class="row align-items-center">
                 <div class="col-lg-8 col-md-6 col-12">
                     <div class="nav-inner">
+
                         <!-- Start Mega Category Menu -->
                         <div class="mega-category-menu">
                             <span class="cat-button"><i class="lni lni-menu"></i>All Categories</span>
@@ -231,7 +233,7 @@
                             <div class="collapse navbar-collapse sub-menu-bar" id="navbarSupportedContent">
                                 <ul id="nav" class="navbar-nav ms-auto">
                                     <li class="nav-item">
-                                        <a href="index.html" aria-label="Toggle navigation">Home</a>
+                                        <a href="/" aria-label="Toggle navigation">{{ __('Home') }}</a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="dd-menu active collapsed" href="javascript:void(0)"
@@ -239,11 +241,9 @@
                                             aria-controls="navbarSupportedContent" aria-expanded="false"
                                             aria-label="Toggle navigation">Pages</a>
                                         <ul class="sub-menu collapse" id="submenu-1-2">
-                                            <li class="nav-item"><a href="about-us.html">About Us</a></li>
-                                            <li class="nav-item"><a href="faq.html">Faq</a></li>
-                                            <li class="nav-item active"><a href="login.html">Login</a></li>
-                                            <li class="nav-item"><a href="register.html">Register</a></li>
-                                            <li class="nav-item"><a href="mail-success.html">Mail Success</a></li>
+                                            <li class="nav-item"><a href="about-us.html">{{ __('About Us') }}</a></li>
+                                            <li class="nav-item active"><a href="login.html">{{ __('Sign In') }}</a></li>
+                                            <li class="nav-item"><a href="register.html">{{ __('Register') }}</a></li>
                                             <li class="nav-item"><a href="404.html">404 Error</a></li>
                                         </ul>
                                     </li>
@@ -272,7 +272,7 @@
                                         </ul>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="contact.html" aria-label="Toggle navigation">Contact Us</a>
+                                        <a href="contact.html" aria-label="Toggle navigation">{{ __('Contact Us') }}</a>
                                     </li>
                                 </ul>
                             </div> <!-- navbar collapse -->
@@ -392,11 +392,9 @@
                             <div class="single-footer f-link">
                                 <h3>Information</h3>
                                 <ul>
-                                    <li><a href="javascript:void(0)">About Us</a></li>
-                                    <li><a href="javascript:void(0)">Contact Us</a></li>
-                                    <li><a href="javascript:void(0)">Downloads</a></li>
-                                    <li><a href="javascript:void(0)">Sitemap</a></li>
-                                    <li><a href="javascript:void(0)">FAQs Page</a></li>
+                                    <li><a href="javascript:void(0)">{{ __('About Us') }}</a></li>
+                                    <li><a href="javascript:void(0)">{{ __('Contact Us') }}</a></li>
+
                                 </ul>
                             </div>
                             <!-- End Single Widget -->
