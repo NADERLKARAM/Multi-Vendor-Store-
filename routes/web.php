@@ -12,6 +12,9 @@ use App\Http\Controllers\Front\CartController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HeroSectionController;
 
+use App\Http\Controllers\Auth\SocialLoginController;
+use App\Http\Controllers\SocialController;
+
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 
@@ -72,6 +75,14 @@ Route::middleware('auth')->group(function () {
 
 Route::get('auth/user/2fa', [TwoFactorAuthentcationController::class, 'index'])
 ->name('front.2fa');
+
+
+Route::get('auth/{provider}/redirect', [SocialLoginController::class, 'redirect'])
+    ->name('auth.socilaite.redirect');
+Route::get('auth/{provider}/callback', [SocialLoginController::class, 'callback'])
+    ->name('auth.socilaite.callback');
+
+Route::get('auth/{provider}/user', [SocialController::class, 'index']);
 
 
 // require __DIR__.'/auth.php';
