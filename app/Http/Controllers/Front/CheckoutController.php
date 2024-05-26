@@ -73,6 +73,6 @@ class CheckoutController extends Controller
             throw $e;
         }
 
-        return redirect()->route('checkout');
+        return redirect()->route('orders.payments.create', $order->id);
     }
 }

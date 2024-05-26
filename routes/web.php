@@ -4,6 +4,7 @@ use App\Http\Controllers\Dashboard\CategoriesController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Dashboard\ProductController;
 use App\Http\Controllers\Front\Auth\TwoFactorAuthentcationController;
+use App\Http\Controllers\Front\PaymentsController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Front\HomeController;
 use App\Http\Controllers\Front\FProductController;
@@ -83,6 +84,17 @@ Route::get('auth/{provider}/callback', [SocialLoginController::class, 'callback'
     ->name('auth.socilaite.callback');
 
 Route::get('auth/{provider}/user', [SocialController::class, 'index']);
+
+
+
+Route::get('orders/{order}/pay', [PaymentsController::class, 'create'])
+    ->name('orders.payments.create');
+
+Route::post('orders/{order}/stripe/paymeny-intent', [PaymentsController::class, 'createStripePaymentIntent'])
+    ->name('stripe.paymentIntent.create');
+
+Route::get('orders/{order}/pay/stripe/callback', [PaymentsController::class, 'confirm'])
+    ->name('stripe.return');
 
 
 // require __DIR__.'/auth.php';

@@ -14,15 +14,17 @@ return new class extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            Schema::table('users', function (Blueprint $table) {
+            if (!Schema::hasColumn('users', 'provider')) {
                 $table->string('provider')->nullable()->after('remember_token');
+            }
+            if (!Schema::hasColumn('users', 'provider_id')) {
                 $table->string('provider_id')->nullable()->after('provider');
+            }
+            if (!Schema::hasColumn('users', 'provider_token')) {
                 $table->string('provider_token', 1000)->nullable()->after('provider_id');
-
-            });
+            }
         });
     }
-
     /**
      * Reverse the migrations.
      *
