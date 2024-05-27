@@ -19,6 +19,13 @@ class Order extends Model
         return $this->belongsTo(Store::class);
     }
 
+
+    public function delivery()
+    {
+        return $this->hasOne(Delivery::class);
+    }
+    
+
     public function user()
     {
         return $this->belongsTo(User::class)->withDefault([

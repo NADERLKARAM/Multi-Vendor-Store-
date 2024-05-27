@@ -4,6 +4,7 @@ use App\Http\Controllers\Dashboard\CategoriesController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Dashboard\ProductController;
 use App\Http\Controllers\Front\Auth\TwoFactorAuthentcationController;
+use App\Http\Controllers\Front\OrdersController;
 use App\Http\Controllers\Front\PaymentsController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Front\HomeController;
@@ -95,6 +96,10 @@ Route::post('orders/{order}/stripe/paymeny-intent', [PaymentsController::class, 
 
 Route::get('orders/{order}/pay/stripe/callback', [PaymentsController::class, 'confirm'])
     ->name('stripe.return');
+
+
+    Route::get('/orders/{order}', [OrdersController::class, 'show'])
+    ->name('orders.show');
 
 
 // require __DIR__.'/auth.php';

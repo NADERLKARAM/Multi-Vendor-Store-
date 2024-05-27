@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\DeliveriesController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -17,3 +18,8 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+
+
+Route::get('deliveries/{delivery}', [DeliveriesController::class, 'show']);
+Route::put('deliveries/{delivery}', [DeliveriesController::class, 'update']);
