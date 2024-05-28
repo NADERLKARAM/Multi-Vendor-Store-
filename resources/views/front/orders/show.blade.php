@@ -1,30 +1,26 @@
+<x-front-layout title="Order Details">
 
-@extends('front.front_layouts.master')
-
-
-@section('content')
-
-
-    <!-- Start Breadcrumbs -->
-    <div class="breadcrumbs">
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-lg-6 col-md-6 col-12">
-                    <div class="breadcrumbs-content">
-                        <h1 class="page-title">Single Product</h1>
+    <x-slot:breadcrumb>
+        <div class="breadcrumbs">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-lg-6 col-md-6 col-12">
+                        <div class="breadcrumbs-content">
+                            <h1 class="page-title">Order # {{ $order->number }}</h1>
+                        </div>
                     </div>
-                </div>
-                <div class="col-lg-6 col-md-6 col-12">
-                    <ul class="breadcrumb-nav">
-                        <li><a href="index.html"><i class="lni lni-home"></i> Home</a></li>
-                        <li><a href="index.html">Shop</a></li>
-                        <li>Single Product</li>
-                    </ul>
+                    <div class="col-lg-6 col-md-6 col-12">
+                        <ul class="breadcrumb-nav">
+                            <li><a href="/"><i class="lni lni-home"></i> Home</a></li>
+                            <li><a href="#">Orders</a></li>
+                            <li>Order # {{ $order->number }}</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <!-- End Breadcrumbs -->
+    </x-slot:breadcrumb>
+
 
 
     <section class="checkout-wrapper section">
@@ -81,4 +77,4 @@
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD2dLTxPlKRS4KKXi2ffbRMtON8-gaze3w&callback=initMap&v=weekly" defer></script>
 
-    @endsection
+</x-front-layout>

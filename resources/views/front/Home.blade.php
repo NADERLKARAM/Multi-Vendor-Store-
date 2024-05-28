@@ -1,87 +1,5 @@
-@extends('front.front_layouts.master')
+<x-front-layout>
 
-
-@section('content')
-
-    <!-- Start Hero Area -->
-    <section class="hero-area">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-8 col-12 custom-padding-right">
-                    <div class="slider-head">
-                        <!-- Start Hero Slider -->
-                        <div class="hero-slider">
-                            <!-- Start Single Slider -->
-                            <div class="single-slider"
-                                style="background-image: url(https://via.placeholder.com/800x500);">
-                                <div class="content">
-                                    <h2><span>No restocking fee ($35 savings)</span>
-                                        M75 Sport Watch
-                                    </h2>
-                                    <p>Lorem ipsum dolor sit amet, consectetur elit, sed do eiusmod tempor incididunt ut
-                                        labore dolore magna aliqua.</p>
-                                    <h3><span>Now Only</span> $320.99</h3>
-                                    <div class="button">
-                                        <a href="product-grids.html" class="btn">Shop Now</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- End Single Slider -->
-                            <!-- Start Single Slider -->
-                            <div class="single-slider"
-                                style="background-image: url(https://via.placeholder.com/800x500);">
-                                <div class="content">
-                                    <h2><span>Big Sale Offer</span>
-                                        Get the Best Deal on CCTV Camera
-                                    </h2>
-                                    <p>Lorem ipsum dolor sit amet, consectetur elit, sed do eiusmod tempor incididunt ut
-                                        labore dolore magna aliqua.</p>
-                                    <h3><span>Combo Only:</span> $590.00</h3>
-                                    <div class="button">
-                                        <a href="product-grids.html" class="btn">Shop Now</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- End Single Slider -->
-                        </div>
-                        <!-- End Hero Slider -->
-                    </div>
-                </div>
-                <div class="col-lg-4 col-12">
-                    <div class="row">
-                        <div class="col-lg-12 col-md-6 col-12 md-custom-padding">
-                            <!-- Start Small Banner -->
-                            <div class="hero-small-banner"
-                                style="background-image: url('https://via.placeholder.com/370x250');">
-                                <div class="content">
-                                    <h2>
-                                        <span>New line required</span>
-                                        iPhone 12 Pro Max
-                                    </h2>
-                                    <h3>$259.99</h3>
-                                </div>
-                            </div>
-                            <!-- End Small Banner -->
-                        </div>
-                        <div class="col-lg-12 col-md-6 col-12">
-                            <!-- Start Small Banner -->
-                            <div class="hero-small-banner style2">
-                                <div class="content">
-                                    <h2>Weekly Sale!</h2>
-                                    <p>Saving up to 50% off all online store items this week.</p>
-                                    <div class="button">
-                                        <a class="btn" href="product-grids.html">Shop Now</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Start Small Banner -->
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- End Hero Area -->
 
     <!-- Start Featured Categories Area -->
     <section class="featured-categories section">
@@ -90,8 +8,6 @@
                 <div class="col-12">
                     <div class="section-title">
                         <h2>Featured Categories</h2>
-                        <p>There are many variations of passages of Lorem Ipsum available, but the majority have
-                            suffered alteration in some form.</p>
                     </div>
                 </div>
             </div>
@@ -103,88 +19,80 @@
                     <div class="single-category">
                         <h3 class="heading">{{ $category->name }}</h3>
                         <ul>
-                            <li><a href="product-grids.html">Smart Television</a></li>
-                            <li><a href="product-grids.html">QLED TV</a></li>
-                            <li><a href="product-grids.html">Audios</a></li>
-                            <li><a href="product-grids.html">Headphones</a></li>
+                            @foreach ($category->products->take(4) as $product)
+                            <li><a href="{{ route('product-details', ['product' => $product->id]) }}">{{ $product->name }}</a></li>
+                            @endforeach
                             <li><a href="product-grids.html">View All</a></li>
                         </ul>
                         <div class="images">
-                            <img  style="width: 200px; height: 240px;" src="{{ asset('storage/' . $category->image) }}" alt="{{ $category->name }}">
+                            <img  style="width: 200px; height: 185px; padding-right: 30px;" src="{{ asset('storage/' . $category->image) }}" alt="{{ $category->name }}">
                         </div>
                     </div>
                     <!-- End Single Category -->
                 </div>
-
                 @endforeach
             </div>
         </div>
     </section>
     <!-- End Features Area -->
 
-    <!-- Start Trending Product Area -->
-    <section class="trending-product section">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="section-title">
-                        <h2>Trending Product</h2>
-                        <p>There are many variations of passages of Lorem Ipsum available, but the majority have
-                            suffered alteration in some form.</p>
-                    </div>
+<!-- Start Trending Product Area -->
+<section class="trending-product section">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="section-title">
+                    <h2>Trending Product</h2>
                 </div>
-            </div>
-            <div class="row">
-                @foreach ($products as $product)
-
-
-                <div class="col-lg-3 col-md-6 col-12">
-                    <!-- Start Single Product -->
-                    <div class="single-product">
-                        <div class="product-image">
-                            <a href="/products/{{ $product->id }}"><img
- src="{{ asset('storage/' . $product->image) }}"
-                                alt=""></a>
-                            <div class="button">
-                                <a href="{{ route('product-details', ['product' => $product->id]) }}" class="btn"><i class="lni lni-cart"></i> Add to Cart</a>
-                            </div>
-                        </div>
-                        <div class="product-info">
-                            @if ($product->category)
-                                    <a href="javascript:void(0)">{{ $product->category->name }}</a>
-                                @else
-                                    No category assigned
-                                @endif
-                            <h4 class="title">
-                                <a href="{{ route('product-details', ['product' => $product->id]) }}">{{ $product->name}}</a>
-                            </h4>
-                            <ul class="review">
-                                <li><i class="lni lni-star-filled"></i></li>
-                                <li><i class="lni lni-star-filled"></i></li>
-                                <li><i class="lni lni-star-filled"></i></li>
-                                <li><i class="lni lni-star-filled"></i></li>
-                                <li><i class="lni lni-star"></i></li>
-                                <li><span>4.0 Review(s)</span></li>
-                            </ul>
-                            <div class="price">
-                                <span>{{$product->price  }}</span>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- End Single Product -->
-                </div>
-
-
-                @endforeach
-
             </div>
         </div>
-    </section>
-    <!-- End Trending Product Area -->
+        <div class="row">
+            @foreach ($products as $product)
+            <div class="col-lg-3 col-md-6 col-12">
+                <!-- Start Single Product -->
+                <div class="single-product">
+                    <div class="product-image">
+                        <a href="/products/{{ $product->id }}">
+                            <img style="width: 250px; height: 250px; padding: 10px 0px 10px 35px;" src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}">
+                            <div class="dark-overlay"></div>
+                        </a>
+                        <div class="button">
+                            <a href="{{ route('product-details', ['product' => $product->id]) }}" class="btn"><i class="lni lni-cart"></i> Add to Cart</a>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        @if ($product->category)
+                        <a href="javascript:void(0)">{{ $product->category->name }}</a>
+                        @else
+                        <span>No category assigned</span>
+                        @endif
+                        <h4 class="title">
+                            <a href="{{ route('product-details', ['product' => $product->id]) }}">{{ $product->name }}</a>
+                        </h4>
+                        <ul class="review">
+                            <li><i class="lni lni-star-filled"></i></li>
+                            <li><i class="lni lni-star-filled"></i></li>
+                            <li><i class="lni lni-star-filled"></i></li>
+                            <li><i class="lni lni-star-filled"></i></li>
+                            <li><i class="lni lni-star"></i></li>
+                            <li><span>4.0 Review(s)</span></li>
+                        </ul>
+                        <div class="price">
+                            <span>${{ $product->price }}</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- End Single Product -->
+            </div>
+            @endforeach
+        </div>
+    </div>
+</section>
+<!-- End Trending Product Area -->
 
 
 
-    <!-- Start Special Offer -->
+    {{-- <!-- Start Special Offer -->
     <section class="special-offer section">
         <div class="container">
             <div class="row">
@@ -356,7 +264,7 @@
             </div>
         </div>
     </section>
-    <!-- End Special Offer -->
+    <!-- End Special Offer --> --}}
 
     <!-- Start Home Product List -->
     <section class="home-product-list section">
@@ -537,4 +445,4 @@
 
 
 
-    @endsection
+</x-front-layout>

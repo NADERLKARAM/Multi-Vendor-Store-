@@ -49,7 +49,7 @@
                             <ul class="menu-top-link">
                                 <li>
                                     <div class="select-position">
-                                        <form action="{{ route('currency.store') }}" method="post">
+                                        {{-- <form action="{{ route('currency.store') }}" method="post"> --}}
                                             @csrf
                                             <select name="currency_code" onchange="this.form.submit()">
                                                 <option value="USD" @selected('USD' == session('currency_code'))>$ USD</option>
@@ -63,15 +63,15 @@
                                     </div>
                                 </li>
                                 <li>
-                                    <div class="select-position">
-                                        <form action="{{ URL::current() }}" method="get">
-                                            <select name="locale" onchange="this.form.submit()">
-                                                @foreach(LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
-                                                    <option value="{{ $localeCode }}" @selected($localeCode == App::currentLocale())>{{ $properties['native'] }}</option>
-                                                @endforeach
-                                            </select>
-                                        </form>
-                                    </div>
+                                    <ul>
+                                        @foreach(LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
+                                            <li>
+                                                <a rel="alternate" hreflang="{{ $localeCode }}" href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}">
+                                                    {{ $properties['native'] }}
+                                                </a>
+                                            </li>
+                                        @endforeach
+                                    </ul>
                                 </li>
                             </ul>
                         </div>
@@ -79,7 +79,7 @@
                     <div class="col-lg-4 col-md-4 col-12">
                         <div class="top-middle">
                             <ul class="useful-links">
-                                <li><a href="index.html">{{ trans('Home') }}</a></li>
+                                <li><a href="/">{{ trans('Home') }}</a></li>
                                 <li><a href="about-us.html">@lang('About Us')</a></li>
                                 <li><a href="contact.html">{{ __('Contact Us') }}</a></li>
                             </ul>

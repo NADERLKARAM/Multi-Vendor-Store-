@@ -24,7 +24,7 @@ class Product extends Model
         'rating',
         'featured',
         'status',
-        'name', 'slug',
+        'name',
     ];
 
 
@@ -37,18 +37,6 @@ class Product extends Model
         return $this->belongsTo(Store::class);
     }
 
-    public function tags()
-    {
-        return $this->belongsToMany(Tag::class);
-    }
-
-    public function attachTags($tagNames)
-    {
-        foreach ($tagNames as $tagName) {
-            $tag = Tag::firstOrCreate(['name' => $tagName]);
-            $this->tags()->attach($tag->id);
-        }
-    }
 
     public function save(array $options = [])
     {

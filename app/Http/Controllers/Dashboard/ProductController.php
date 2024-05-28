@@ -3,19 +3,18 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreProductRequest;
+use App\Http\Requests\UpdateProductRequest;
 use App\Models\Category;
 use App\Models\Store;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
         $products = Product::all();
@@ -23,11 +22,6 @@ class ProductController extends Controller
         return view('dashboard.products.index', compact('products'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         $categories = Category::all();
@@ -36,79 +30,46 @@ class ProductController extends Controller
     return view('dashboard.products.create', compact('categories', 'stores'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+
+
+    public function store(StoreProductRequest $request)
     {
-        // Validate the incoming request data
-        $validatedData = $request->validate([
-            'store_id' => 'required|exists:stores,id',
-            'category_id' => 'nullable|exists:categories,id',
-            'name' => 'required|string|max:255|unique:products,name',
-            'description' => 'required|string',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Updated image validation rule
-            'price' => 'required|numeric|min:0',
-            'compare_price' => 'nullable|numeric|min:0',
-            'options' => 'nullable|json',
-            'rating' => 'required',
-            'featured' => 'boolean',
-            'status' => 'required|in:active,draft,archived',
-            'tags' => 'nullable|string',
-        ]);
+        // The validated data is already available via $request->validated()
+        $validatedData = $request->validated();
 
-        // Handle image upload if provided
+        // Store the uploaded image
+        $imagePath = null;
         if ($request->hasFile('image')) {
-            // Store the image in the 'public/product_images' directory
             $imagePath = $request->file('image')->store('product_images', 'public');
-            // Set the image path in the validated data
-            $validatedData['image'] = $imagePath;
         }
 
-        // Generate the slug based on the product name
-        $slug = Str::slug($validatedData['name']);
-
-        // Check if the slug already exists
-        $count = Product::where('slug', $slug)->count();
-        if ($count > 0) {
-            // Append a unique identifier to the slug
-            $slug .= '-' . ($count + 1);
+        // Create and save the product
+        $product = new Product();
+        $product->store_id = $validatedData['store_id'];
+        $product->category_id = $validatedData['category_id'];
+        $product->name = $validatedData['name'];
+        $product->slug = Str::slug($validatedData['name']);
+        $product->description = $validatedData['description'];
+        $product->image = $imagePath;
+        $product->price = $validatedData['price'];
+        $product->compare_price = $validatedData['compare_price'];
+        $product->options = $validatedData['options'];
+        $product->rating = $validatedData['rating'];
+        if (isset($validatedData['featured'])) {
+            $product->featured = $validatedData['featured'];
         }
+        $product->status = $validatedData['status'];
+        $product->save();
 
-        // Add the slug to the validated data
-        $validatedData['slug'] = $slug;
-
-        // Create the product
-        $product = Product::create($validatedData);
-
-        // Attach tags to the product if provided
-        if (!empty($validatedData['tags'])) {
-            $tagNames = explode(',', $validatedData['tags']);
-            $product->attachTags($tagNames);
-        }
-
-        return redirect()->route('products.index')->with('success', 'Product created successfully');
+        // Redirect back with success message
+        return redirect()->route('products.index')->with('success', 'Product created successfully.');
     }
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function show($id)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
        // Fetch the product by its ID
@@ -123,59 +84,45 @@ class ProductController extends Controller
 
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Product $product)
-{
-    // Validate the incoming request data
-    // Validate the incoming request data
-    $validatedData = $request->validate([
-        'store_id' => 'required|exists:stores,id',
-        'category_id' => 'nullable|exists:categories,id',
-        'name' => 'required|string|max:255|unique:products,name',
-        'description' => 'required|string',
-        'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-        'price' => 'required|numeric|min:0',
-        'compare_price' => 'nullable|numeric|min:0',
-        'options' => 'nullable|json',
-        'rating' => 'nullable|numeric|min:0|max:5',
-        'featured' => 'boolean',
-        'status' => 'required|in:active,draft,archived',
-        'tags' => 'nullable|string', // Adjust validation rule for tags
-    ]);
 
-    // Handle image upload if provided
-    if ($request->hasFile('image')) {
-        $imagePath = $request->file('image')->store('product_images');
-        $validatedData['image'] = $imagePath;
-    }
+    public function update(UpdateProductRequest $request, Product $product)
+    {
+        // The validated data is already available via $request->validated()
+        $validatedData = $request->validated();
 
-    // Update product attributes
-    $product->update($validatedData);
-
-    // Generate the slug based on the product name if name is changed
-    if ($product->isDirty('name')) {
+        // Update the product attributes
+        $product->store_id = $validatedData['store_id'];
+        $product->category_id = $validatedData['category_id'];
+        $product->name = $validatedData['name'];
         $product->slug = Str::slug($validatedData['name']);
+        $product->description = $validatedData['description'];
+        $product->price = $validatedData['price'];
+        $product->compare_price = $validatedData['compare_price'];
+        $product->options = $validatedData['options'];
+        $product->rating = $validatedData['rating'];
+        if (isset($validatedData['featured'])) {
+            $product->featured = $validatedData['featured'];
+        }
+        $product->status = $validatedData['status'];
+
+        // Update the image if provided
+        if ($request->hasFile('image')) {
+            // Store the new uploaded image
+            $imagePath = $request->file('image')->store('product_images', 'public');
+            // Delete the old image file if it exists
+            if ($product->image) {
+                Storage::disk('public')->delete($product->image);
+            }
+            // Update the image path
+            $product->image = $imagePath;
+        }
+
+        // Save the updated product
+        $product->save();
+
+        // Redirect back with success message
+        return redirect()->route('products.index')->with('success', 'Product updated successfully.');
     }
-
-    // Save the product to the database
-    $product->save();
-
-    // Attach new tags to the product if provided
-    if (!empty($validatedData['tags'])) {
-        $tagNames = explode(',', $validatedData['tags']);
-        $product->syncTags($tagNames);
-    }
-
-    return redirect()->route('products.index')->with('success', 'Product updated successfully');
-
-    }
-
 
     public function destroy(Product $product)
     {

@@ -114,11 +114,6 @@
                                 </select>
                             </div>
 
-                            <!-- Tags -->
-                            <div class="form-group">
-                                <label for="tags">Tags:</label>
-                                <input class="form-control" name="tags" id="tagInput" placeholder="Enter tags" value="{{ $product->tags }}">
-                            </div>
 
                             <button type="submit" class="btn btn-primary">Update Product</button>
                         </form>
@@ -128,16 +123,4 @@
         </div>
     </div>
 
-    @push('styles')
-        <link href="{{ asset('css/tagify.css') }}" rel="stylesheet" type="text/css" />
-    @endpush
-
-    @push('scripts')
-        <script src="{{ asset('js/tagify.min.js') }}"></script>
-        <script src="{{ asset('js/tagify.polyfills.min.js') }}"></script>
-        <script>
-            var inputElm = document.querySelector('[name=tags]'),
-                tagify = new Tagify(inputElm);
-        </script>
-    @endpush
 @endsection
