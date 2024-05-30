@@ -74,12 +74,14 @@
                             <a href="{{ route('product-details', ['product' => $product->id]) }}">{{ $product->name }}</a>
                         </h4>
                         <ul class="review">
-                            <li><i class="lni lni-star-filled"></i></li>
-                            <li><i class="lni lni-star-filled"></i></li>
-                            <li><i class="lni lni-star-filled"></i></li>
-                            <li><i class="lni lni-star-filled"></i></li>
-                            <li><i class="lni lni-star"></i></li>
-                            <li><span>4.0 Review(s)</span></li>
+                            @for ($i = 1; $i <= 5; $i++)
+                                @if ($i <= $product->rating)
+                                    <li><i class="lni lni-star-filled"></i></li>
+                                @else
+                                    <li><i class="lni lni-star"></i></li>
+                                @endif
+                            @endfor
+                            <li><span>{{ number_format($product->rating, 1) }} Review(s)</span></li>
                         </ul>
                         <div class="price">
                             <span>${{ $product->price }}</span>

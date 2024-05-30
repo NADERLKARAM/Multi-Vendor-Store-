@@ -15,7 +15,7 @@
         "laravel/tinker": "^2.7",
         "mcamara/laravel-localization": "^2.0",
         "pusher/pusher-php-server": "^7.2",
-        "stripe/stripe-php": "^14.7",
+        "stripe/stripe-php": "^14.8",
         "symfony/intl": "^7.0"
     },
     "require-dev": {

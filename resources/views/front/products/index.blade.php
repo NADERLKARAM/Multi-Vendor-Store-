@@ -16,7 +16,7 @@
                 </div>
                 <div class="col-lg-6 col-md-6 col-12">
                     <ul class="breadcrumb-nav">
-                        <li><a href="index.html"><i class="lni lni-home"></i> Home</a></li>
+                        <li><a href="/"><i class="lni lni-home"></i> Home</a></li>
                         <li><a href="javascript:void(0)">Shop</a></li>
                         <li>Shop Grid</li>
                     </ul>
@@ -55,35 +55,22 @@
 </div>
 <!-- End Single Widget -->
 
-                        <!-- Start Single Widget -->
-                        <div class="single-widget condition">
-                            <h3>Filter by Price</h3>
+                     <!-- Start Single Widget -->
+                     <div class="single-widget condition">
+                        <h3>Filter by Price</h3>
+                        <form action="{{ isset($category_id) ? route('products.byCategory', ['category_id' => $category_id]) : '#' }}" method="GET">
+                            @foreach ($priceRanges as $priceRange)
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault1">
-                                <label class="form-check-label" for="flexCheckDefault1">
-                                    $50 - $100L (208)
+                                <input class="form-check-input" type="checkbox" name="price_range" value="{{ $priceRange['value'] }}" id="price_range_{{ $loop->index }}">
+                                <label class="form-check-label" for="price_range_{{ $loop->index }}">
+                                    {{ $priceRange['range'] }} ({{ $priceRange['count'] }})
                                 </label>
                             </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault2">
-                                <label class="form-check-label" for="flexCheckDefault2">
-                                    $100L - $500 (311)
-                                </label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault3">
-                                <label class="form-check-label" for="flexCheckDefault3">
-                                    $500 - $1,000 (485)
-                                </label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault4">
-                                <label class="form-check-label" for="flexCheckDefault4">
-                                    $1,000 - $5,000 (213)
-                                </label>
-                            </div>
-                        </div>
-                        <!-- End Single Widget -->
+                            @endforeach
+                            <button type="submit" class="btn btn-primary">Apply Filter</button>
+                        </form>
+                    </div>
+<!-- End Single Widget -->
                         <!-- Start Single Widget -->
                         <div class="single-widget condition">
                             <h3>Filter by Brand</h3>
@@ -157,6 +144,9 @@
                                         </select>
                                         <h3 class="total-show-product">Showing: <span>j - 12 items</span></h3>
                                     </div>
+                                    @if(isset($category_id))
+                                    <input type="hidden" id="categoryId" value="{{ $category_id }}">
+                                @endif
                                 </div>
                                 <div class="col-lg-5 col-md-4 col-12">
                                     <nav>
@@ -351,7 +341,9 @@
     <script>
         function handleSortingChange() {
             var sortingValue = document.getElementById('sorting').value;
-            window.location.href = '{{ route("products.byCategory", ["category_id" => $category_id]) }}?sort=' + sortingValue;
+            var url = '{{ route("products.byCategory", ["category_id" => ":category_id"]) }}';
+            url = url.replace(':category_id', document.getElementById('categoryId').value);
+            window.location.href = url + '?sort=' + sortingValue;
         }
     </script>
 

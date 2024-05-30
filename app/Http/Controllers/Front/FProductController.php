@@ -6,6 +6,7 @@ use App\Models\Category;
 use App\Models\Product;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class FProductController extends Controller
 {
@@ -26,20 +27,61 @@ class FProductController extends Controller
 
     public function getProductsByCategory(Request $request, $category_id)
     {
-         // Retrieve products for the specified category ID
-         $query = Product::where('category_id', $category_id);
+        // Retrieve products for the specified category ID
+        $query = Product::where('category_id', $category_id);
 
-         // Apply sorting
-         $query = $this->applySorting($query, $request->input('sort'));
+        // Apply sorting
+        $query = $this->applySorting($query, $request->input('sort'));
 
-         // Paginate the results
-         $products = $query->paginate(12);
+        // Filter by selected price range
+        if ($request->filled('price_range')) {
+            $priceRange = explode('-', $request->input('price_range'));
+            $query->whereBetween('price', [$priceRange[0], $priceRange[1]]);
+        }
 
-         // Fetch all categories along with the count of products associated with each category
-         $categories = Category::withCount('products')->get();
+        // Paginate the results
+        $products = $query->paginate(6);
 
-         // Pass the data to the view
-         return view('front.products.index', compact('products', 'categories', 'category_id'));
+        // Fetch all categories along with the count of products associated with each category
+        $categories = Category::withCount('products')->get();
+
+        // Calculate price ranges
+        $priceRanges = $this->calculatePriceRanges();
+
+        // Pass the data to the view
+        return view('front.products.index', compact('products', 'categories', 'priceRanges', 'category_id'));
+    }
+
+    private function calculatePriceRanges()
+    {
+        $priceRanges = [];
+
+        // Retrieve minimum and maximum prices from products
+        $minPrice = Product::min('price');
+        $maxPrice = Product::max('price');
+
+        // Define price ranges based on the minimum and maximum prices
+        $ranges = [
+            [0, 100],
+            [100, 500],
+            [500, 1000],
+            [1000, 5000],
+            [5000, 10000],
+            [10000, 15000],
+            [15000, 20000],
+        ];
+
+        // Calculate the number of products in each price range
+        foreach ($ranges as $range) {
+            $rangeProductsCount = Product::whereBetween('price', $range)->count();
+            $priceRanges[] = [
+                'range' => '$' . $range[0] . ' - $' . $range[1],
+                'value' => $range[0] . '-' . $range[1],
+                'count' => $rangeProductsCount
+            ];
+        }
+
+        return $priceRanges;
     }
 
 
@@ -71,16 +113,20 @@ class FProductController extends Controller
     }
 
 
-
     public function searchProducts(Request $request)
     {
         $query = $request->input('query');
         $categories = Category::withCount('products')->get();
 
+        // Paginate the search results
         $products = Product::where('name', 'LIKE', "%{$query}%")
             ->orWhere('description', 'LIKE', "%{$query}%")
-            ->get();
+            ->paginate(6); // You can adjust the pagination size as needed
 
-        return view('front.products.index', compact('products', 'categories', 'query'));
+        // Calculate price ranges
+        $priceRanges = $this->calculatePriceRanges();
+
+        // Pass the data to the view
+        return view('front.products.index', compact('products', 'categories', 'query', 'priceRanges'));
     }
 }
