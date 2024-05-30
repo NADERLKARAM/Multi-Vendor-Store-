@@ -102,9 +102,8 @@
     </tbody>
 </table>
 
-<!-- Pagination links -->
-{{ $categories->links() }}
-
+ <!-- Custom Pagination Links -->
+ {{ $categories->links('vendor.pagination.custom') }}
 
 
 <script>

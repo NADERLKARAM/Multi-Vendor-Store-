@@ -18,9 +18,7 @@ class CheckoutController extends Controller
 {
     public function create(CartRepository $cart)
     {
-        if ($cart->get()->count() == 0) {
-            throw new InvalidOrderException('Cart is empty');
-        }
+
         return view('front.checkout', [
             'cart' => $cart,
             'countries' => Countries::getNames(),
@@ -37,18 +35,23 @@ class CheckoutController extends Controller
             'addr.billing.city' => ['required', 'string', 'max:255'],
         ]);
 
+        if ($cart->get()->isEmpty()) {
+            throw new InvalidOrderException('Cart is empty');
+        }
+
         $items = $cart->get()->groupBy('product.store_id')->all();
 
         DB::beginTransaction();
         try {
             foreach ($items as $store_id => $cart_items) {
-
+                // Create order and order items
                 $order = Order::create([
                     'store_id' => $store_id,
                     'user_id' => Auth::id(),
                     'payment_method' => 'cod',
                 ]);
 
+                // Add order items
                 foreach ($cart_items as $item) {
                     OrderItem::create([
                         'order_id' => $order->id,
@@ -59,12 +62,17 @@ class CheckoutController extends Controller
                     ]);
                 }
 
+                // Add addresses to order
                 foreach ($request->post('addr') as $type => $address) {
                     $address['type'] = $type;
                     $order->addresses()->create($address);
                 }
             }
 
+            // Empty the cart
+            $cart->empty();
+
+            // Fire OrderCreated event
             event(new OrderCreated($order));
 
             DB::commit();

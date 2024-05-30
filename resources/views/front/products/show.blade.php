@@ -51,7 +51,7 @@
                             <main id="gallery">
                                 <div class="main-img">
                                     <a href="/products/{{ $product->id }}"><img
-                                        style="max-height:300px;min-height:300px" src="{{ asset('storage/' . $product->image) }}"
+                                        style="max-height:550px;min-height:350px" src="{{ asset('storage/' . $product->image) }}"
                                         alt=""></a>
                                 </div>
                                 {{-- <div class="images">

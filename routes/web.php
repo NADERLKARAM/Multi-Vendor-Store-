@@ -102,5 +102,10 @@ Route::get('orders/{order}/pay/stripe/callback', [PaymentsController::class, 'co
     ->name('orders.show');
 
 
+    Route::get('/products/category/{category_id}', [FProductController::class, 'getProductsByCategory'])->name('products.byCategory');
+    Route::get('/search', [FProductController::class, 'searchProducts'])->name('products.search');
+
+
+
 // require __DIR__.'/auth.php';
 });

@@ -22,7 +22,7 @@
                             @foreach ($category->products->take(4) as $product)
                             <li><a href="{{ route('product-details', ['product' => $product->id]) }}">{{ $product->name }}</a></li>
                             @endforeach
-                            <li><a href="product-grids.html">View All</a></li>
+                            <li><a href="{{ route('products.byCategory', $category->id) }}">View All</a></li>
                         </ul>
                         <div class="images">
                             <img  style="width: 200px; height: 185px; padding-right: 30px;" src="{{ asset('storage/' . $category->image) }}" alt="{{ $category->name }}">
@@ -54,7 +54,11 @@
                     <div class="product-image">
                         <a href="/products/{{ $product->id }}">
                             <img style="width: 250px; height: 250px; padding: 10px 0px 10px 35px;" src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}">
-                            <div class="dark-overlay"></div>
+                            @if ($product->compare_price && $product->compare_price > $product->price)
+                                                <span class="sale-tag">
+                                                    -{{ round((($product->compare_price - $product->price) / $product->compare_price) * 100) }}%
+                                                </span>
+                            @endif
                         </a>
                         <div class="button">
                             <a href="{{ route('product-details', ['product' => $product->id]) }}" class="btn"><i class="lni lni-cart"></i> Add to Cart</a>

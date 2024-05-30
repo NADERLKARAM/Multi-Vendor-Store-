@@ -10,11 +10,8 @@ use Illuminate\Support\Facades\Storage;
 
 class CategoriesController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
+
     public function index(Request $request)
     {
         $search = $request->input('search');
@@ -34,7 +31,7 @@ class CategoriesController extends Controller
     $categories->orderBy($orderBy, $orderDirection);
 
     // Paginate the results
-    $categories = $categories->paginate(10); // Fetch 10 categories per page
+    $categories = $categories->paginate(3); // Fetch 10 categories per page
 
     return view('dashboard.categories.index', compact('categories'));
     }

@@ -14,6 +14,37 @@
     <a href="{{ route('products.create') }}" class="btn btn-sm btn-outline-primary mr-2">Create</a>
 </div>
 
+<div class="mb-3">
+    <form action="{{ route('products.index') }}" method="GET">
+        <div class="input-group">
+            <input type="text" class="form-control" placeholder="Search products" name="search" value="{{ request('search') }}">
+            <div class="input-group-append">
+                <button class="btn btn-outline-secondary" type="submit">Search</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<!-- Ordering Controls -->
+<div class="mb-3">
+    <strong>Order by:</strong>
+    <form action="{{ route('products.index') }}" method="GET" class="form-inline">
+        <div class="input-group">
+            <select class="form-control" name="order_by">
+                <option value="name" {{ request('order_by') == 'name' ? 'selected' : '' }}>Name</option>
+                <option value="created_at" {{ request('order_by') == 'created_at' ? 'selected' : '' }}>Created At</option>
+            </select>
+            <select class="form-control" name="order_direction">
+                <option value="asc" {{ request('order_direction') == 'asc' ? 'selected' : '' }}>Ascending</option>
+                <option value="desc" {{ request('order_direction') == 'desc' ? 'selected' : '' }}>Descending</option>
+            </select>
+            <div class="input-group-append">
+                <button class="btn btn-primary" type="submit">Apply</button>
+            </div>
+        </div>
+    </form>
+</div>
+
 
 
 <table class="table">
@@ -65,5 +96,8 @@
         @endforelse
     </tbody>
 </table>
+
+ <!-- Custom Pagination Links -->
+ {{ $products->links('vendor.pagination.custom') }}
 
 @endsection

@@ -15,10 +15,29 @@ use Illuminate\Support\Facades\Storage;
 class ProductController extends Controller
 {
 
-    public function index()
+    public function index(Request $request)
     {
-        $products = Product::all();
+        // Get search and ordering inputs from the request
+        $search = $request->input('search');
+        $orderBy = $request->input('order_by', 'name'); // Default ordering by name
+        $orderDirection = $request->input('order_direction', 'asc'); // Default order direction ascending
 
+        // Query products
+        $products = Product::query();
+
+        // Add search functionality
+        if ($search) {
+            $products->where('name', 'like', '%' . $search . '%')
+                     ->orWhere('description', 'like', '%' . $search . '%');
+        }
+
+        // Apply ordering
+        $products->orderBy($orderBy, $orderDirection);
+
+        // Paginate the results
+        $products = $products->paginate(3); // Fetch 10 products per page
+
+        // Return the view with the products
         return view('dashboard.products.index', compact('products'));
     }
 
