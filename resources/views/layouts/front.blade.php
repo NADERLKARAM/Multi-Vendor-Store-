@@ -169,9 +169,9 @@
                             </div>
                             <div class="navbar-cart">
                                 <div class="wishlist">
-                                    <a href="javascript:void(0)">
+                                    <a href="/wishlist">
                                         <i class="lni lni-heart"></i>
-                                        <span class="total-items">0</span>
+                                        <span id="wishlistItemCount" class="total-items">0</span>
                                     </a>
                                 </div>
                                 <x-cart-menu />
@@ -236,7 +236,7 @@
                             <div class="collapse navbar-collapse sub-menu-bar" id="navbarSupportedContent">
                                 <ul id="nav" class="navbar-nav ms-auto">
                                     <li class="nav-item">
-                                        <a href="index.html" aria-label="Toggle navigation">{{ __('Home') }}</a>
+                                        <a href="/" aria-label="Toggle navigation">{{ __('Home') }}</a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="dd-menu active collapsed" href="javascript:void(0)"
@@ -245,11 +245,9 @@
                                             aria-label="Toggle navigation">{{ __('Pages') }}</a>
                                         <ul class="sub-menu collapse" id="submenu-1-2">
                                             <li class="nav-item"><a href="about-us.html">About Us</a></li>
-                                            <li class="nav-item"><a href="faq.html">Faq</a></li>
-                                            <li class="nav-item active"><a href="login.html">Login</a></li>
-                                            <li class="nav-item"><a href="register.html">Register</a></li>
-                                            <li class="nav-item"><a href="mail-success.html">Mail Success</a></li>
-                                            <li class="nav-item"><a href="404.html">404 Error</a></li>
+                                            <li class="nav-item active"><a href="{{ route('login') }}">{{ Lang::get('Sign In') }}</a></li>
+                                            <li class="nav-item"><a href="{{ route('register') }}">{{ __('Register') }}</a></li>
+
                                         </ul>
                                     </li>
                                     <li class="nav-item">
@@ -464,8 +462,29 @@
     <script src="{{ asset('assets/js/tiny-slider.js') }}"></script>
     <script src="{{ asset('assets/js/glightbox.min.js') }}"></script>
     <script src="{{ asset('assets/js/main.js') }}"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        // Function to update wishlist item count
+        function updateWishlistItemCount() {
+            $.ajax({
+                type: 'GET',
+                url: '/wishlist/count', // Endpoint to fetch wishlist item count
+                success: function(response) {
+                    $('#wishlistItemCount').text(response.count);
+                },
+                error: function(xhr, status, error) {
+                    console.error(xhr.responseText); // Log any errors
+                }
+            });
+        }
 
+        // Call the function initially to load the count
+        updateWishlistItemCount();
+    });
+</script>
     @stack('scripts')
+
 
 </body>
 

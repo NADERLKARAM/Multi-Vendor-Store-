@@ -16,6 +16,7 @@ use App\Http\Controllers\HeroSectionController;
 
 use App\Http\Controllers\Auth\SocialLoginController;
 use App\Http\Controllers\SocialController;
+use App\Http\Controllers\Front\WishlistController;
 
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
@@ -62,6 +63,7 @@ Route::get('admin/dashboard', [DashboardController::class, 'index'])
 
 
     Route::resource('cart', CartController::class);
+    Route::post('/cart/add/{product}', [CartController::class, 'add'])->name('cart.add');
 
 
     Route::get('checkout', [CheckoutController::class, 'create'])->name('checkout');
@@ -105,6 +107,16 @@ Route::get('orders/{order}/pay/stripe/callback', [PaymentsController::class, 'co
     Route::get('/products/category/{category_id}', [FProductController::class, 'getProductsByCategory'])->name('products.byCategory');
     Route::get('/search', [FProductController::class, 'searchProducts'])->name('products.search');
 
+
+
+    Route::middleware(['auth'])->group(function () {
+        Route::get('/wishlist', [WishlistController::class, 'index'])->name('wishlist.index');
+        Route::post('/wishlist', [WishlistController::class, 'store'])->name('wishlist.store');
+        Route::delete('/wishlist/{id}', [WishlistController::class, 'destroy'])->name('wishlist.destroy');
+
+    });
+
+    Route::get('/wishlist/count', [WishlistController::class, 'count'])->name('wishlist.count');
 
 // require __DIR__.'/auth.php';
 });

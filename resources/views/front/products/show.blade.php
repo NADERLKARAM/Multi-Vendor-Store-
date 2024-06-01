@@ -128,19 +128,23 @@
                                 <div class="bottom-content">
                                     <div class="row align-items-end">
                                         <div class="col-lg-4 col-md-4 col-12">
-                                            <div class="button cart-button">
-                                                <button class="btn" type="submit" style="width: 100%;">Add to Cart</button>
-                                            </div>
+                                            <form action="{{ route('cart.add', ['product' => $product->id]) }}" method="POST">
+                                                @csrf
+                                                <div class="button cart-button">
+                                                    <button class="btn" type="submit" style="width: 100%;">Add to Cart</button>
+                                                </div>
+                                            </form>
                                         </div>
+
                                         <div class="col-lg-4 col-md-4 col-12">
-                                            <div class="wish-button">
-                                                <button class="btn"><i class="lni lni-reload"></i> Compare</button>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4 col-md-4 col-12">
-                                            <div class="wish-button">
-                                                <button class="btn"><i class="lni lni-heart"></i> To Wishlist</button>
-                                            </div>
+                                            <!-- Button for adding/removing to/from wishlist -->
+                                            <form id="wishlistForm-{{ $product->id }}" class="wishlistForm" action="{{ route('wishlist.store') }}" method="POST">
+                                                @csrf
+                                                <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                                <div class="wish-button">
+                                                    <button id="wishlistButton-{{ $product->id }}" class="btn btn-primary"><i class="lni lni-heart"></i> To Wishlist</button>
+                                                </div>
+                                            </form>
                                         </div>
                                     </div>
                                 </div>
@@ -372,4 +376,5 @@
         </div>
     </div>
     <!-- End Review Modal -->
+
 </x-front-layout>

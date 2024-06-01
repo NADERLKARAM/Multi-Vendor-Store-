@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Front;
 
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\Wishlist;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -14,6 +15,7 @@ class FProductController extends Controller
     {
         // Retrieve all products from the database
         $products = Product::all();
+
 
         // Pass the products to the view
         return view('front.products.index', compact('products'));
