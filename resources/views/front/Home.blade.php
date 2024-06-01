@@ -7,7 +7,7 @@
             <div class="row">
                 <div class="col-12">
                     <div class="section-title">
-                        <h2>Featured Categories</h2>
+                        <h2>{{ __('Featured Categories') }}</h2>
                     </div>
                 </div>
             </div>
@@ -42,12 +42,12 @@
         <div class="row">
             <div class="col-12">
                 <div class="section-title">
-                    <h2>Trending Product</h2>
+                    <h2>{{ __('Trending Product') }}</h2>
                 </div>
             </div>
         </div>
         <div class="row">
-            @foreach ($products as $product)
+            @foreach ($products->take(8) as $product)
             <div class="col-lg-3 col-md-6 col-12">
                 <!-- Start Single Product -->
                 <div class="single-product">

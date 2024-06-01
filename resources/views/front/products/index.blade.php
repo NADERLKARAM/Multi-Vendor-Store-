@@ -1,7 +1,6 @@
-@extends('front.front_layouts.master')
+<x-front-layout>
 
 
-@section('content')
 
 
 
@@ -347,5 +346,4 @@
         }
     </script>
 
-    @endsection
-
+</x-front-layout>

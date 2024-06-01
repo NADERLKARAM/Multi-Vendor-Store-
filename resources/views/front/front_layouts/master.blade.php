@@ -95,7 +95,7 @@
                             </div>
                             <ul class="user-login">
                                 <li>
-                                    <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout').submit()">Sign Out</a>
+                                    <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout').submit()">{{ __('Sign Out') }}</a>
                                 </li>
                                 <form action="{{ route('logout') }}" id="logout" method="post" style="display:none">
                                     @csrf
@@ -191,7 +191,7 @@
 
                         <!-- Start Mega Category Menu -->
                         <div class="mega-category-menu">
-                            <span class="cat-button"><i class="lni lni-menu"></i>All Categories</span>
+                            <span class="cat-button"><i class="lni lni-menu"></i>{{ __('All Categories') }}</span>
                             <ul class="sub-category">
                                 <li><a href="product-grids.html">Electronics <i class="lni lni-chevron-right"></i></a>
                                     <ul class="inner-sub-category">
@@ -239,7 +239,7 @@
                                         <a class="dd-menu active collapsed" href="javascript:void(0)"
                                             data-bs-toggle="collapse" data-bs-target="#submenu-1-2"
                                             aria-controls="navbarSupportedContent" aria-expanded="false"
-                                            aria-label="Toggle navigation">Pages</a>
+                                            aria-label="Toggle navigation">{{ __("Pages") }}</a>
                                         <ul class="sub-menu collapse" id="submenu-1-2">
                                             <li class="nav-item"><a href="about-us.html">{{ __('About Us') }}</a></li>
                                             <li class="nav-item active"><a href="login.html">{{ __('Sign In') }}</a></li>
@@ -250,13 +250,13 @@
                                     <li class="nav-item">
                                         <a class="dd-menu collapsed" href="javascript:void(0)" data-bs-toggle="collapse"
                                             data-bs-target="#submenu-1-3" aria-controls="navbarSupportedContent"
-                                            aria-expanded="false" aria-label="Toggle navigation">Shop</a>
+                                            aria-expanded="false" aria-label="Toggle navigation">{{ __('Shop') }}</a>
                                         <ul class="sub-menu collapse" id="submenu-1-3">
                                             <li class="nav-item"><a href="product-grids.html">Shop Grid</a></li>
                                             <li class="nav-item"><a href="product-list.html">Shop List</a></li>
                                             <li class="nav-item"><a href="product-details.html">shop Single</a></li>
-                                            <li class="nav-item"><a href="cart.html">Cart</a></li>
-                                            <li class="nav-item"><a href="checkout.html">Checkout</a></li>
+                                            <li class="nav-item"><a href="{{ route('cart.index') }}">Cart</a></li>
+                                            <li class="nav-item"><a href="{{ route('checkout') }}">Checkout</a></li>
                                         </ul>
                                     </li>
                                     <li class="nav-item">

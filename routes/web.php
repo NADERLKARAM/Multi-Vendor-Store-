@@ -106,6 +106,5 @@ Route::get('orders/{order}/pay/stripe/callback', [PaymentsController::class, 'co
     Route::get('/search', [FProductController::class, 'searchProducts'])->name('products.search');
 
 
-
 // require __DIR__.'/auth.php';
 });

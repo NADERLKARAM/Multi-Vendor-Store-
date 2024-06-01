@@ -3,11 +3,12 @@
 namespace App\View\Components;
 
 use Illuminate\View\Component;
+use App\Models\Category;
 
 class FrontLayout extends Component
 {
-
     public $title;
+    public $categories;
 
     /**
      * Create a new component instance.
@@ -17,6 +18,7 @@ class FrontLayout extends Component
     public function __construct($title = null)
     {
         $this->title = $title ?? config('app.name');
+        $this->categories = Category::all();
     }
 
     /**
@@ -26,6 +28,8 @@ class FrontLayout extends Component
      */
     public function render()
     {
-        return view('layouts.front');
+        return view('layouts.front', [
+            'categories' => $this->categories,
+        ]);
     }
 }

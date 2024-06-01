@@ -1,8 +1,7 @@
 
-@extends('front.front_layouts.master')
+<x-front-layout>
 
 
-@section('content')
 
 <!-- Start Breadcrumbs -->
 <div class="breadcrumbs">
@@ -137,4 +136,4 @@
     }
 </script>
 
-@endsection
+</x-front-layout>
