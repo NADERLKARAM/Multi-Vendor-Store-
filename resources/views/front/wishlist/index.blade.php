@@ -41,16 +41,20 @@
                                                     @endif
                                                 </p>
                                                 <p>Rating:
-                                                    <ul class="review">
-                                                        @for ($i = 1; $i <= 5; $i++)
-                                                            @if ($i <= $wishlist->product->rating)
-                                                                <li><i class="lni lni-star-filled"></i></li>
-                                                            @else
-                                                                <li><i class="lni lni-star"></i></li>
-                                                            @endif
-                                                        @endfor
-                                                        <li><span>{{ number_format($wishlist->product->rating, 1) }} Review(s)</span></li>
-                                                    </ul>
+                                                @php
+                                                    $averageRating = $wishlist->product->reviews->avg('rating');
+                                                @endphp
+
+                                                <ul class="review">
+                                                    @for ($i = 1; $i <= 5; $i++)
+                                                        @if ($i <= $averageRating)
+                                                            <li><i class="lni lni-star-filled"></i></li>
+                                                        @else
+                                                            <li><i class="lni lni-star"></i></li>
+                                                        @endif
+                                                    @endfor
+                                                    <li><span>{{ number_format($averageRating, 1) }} Review(s)</span></li>
+                                                </ul>
                                                 </p>
                                                 <p>Price: <span>${{ $wishlist->product->price }}</span></p>
                                                 <div class="button">

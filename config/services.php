@@ -31,10 +31,8 @@ return [
     ],
 
     'stripe' => [
-        'publishable_key' => env('STRIPE_PUBLISHABLE_KEY'),
-        'secret_key' => env('STRIPE_SECRET_KEY'),
+        'secret' => env('STRIPE_SECRET'),
     ],
-
 
     'google' => [
         'client_id' => env('GOOGLE_CLIENT_ID'),

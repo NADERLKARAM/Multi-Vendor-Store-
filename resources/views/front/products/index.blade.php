@@ -191,16 +191,20 @@
                                                 <h4 class="title">
                                                     <a href="{{ route('product-details', ['product' => $product->id]) }}">{{ $product->name }}</a>
                                                 </h4>
-                                                <ul class="review">
-                                                    @for ($i = 1; $i <= 5; $i++)
-                                                        @if ($i <= $product->rating)
-                                                            <li><i class="lni lni-star-filled"></i></li>
-                                                        @else
-                                                            <li><i class="lni lni-star"></i></li>
-                                                        @endif
-                                                    @endfor
-                                                    <li><span>{{ number_format($product->rating, 1) }} Review(s)</span></li>
-                                                </ul>
+                                            @php
+                                                $averageRating = $product->reviews->avg('rating');
+                                            @endphp
+
+                                            <ul class="review">
+                                                @for ($i = 1; $i <= 5; $i++)
+                                                    @if ($i <= $averageRating)
+                                                        <li><i class="lni lni-star-filled"></i></li>
+                                                    @else
+                                                        <li><i class="lni lni-star"></i></li>
+                                                    @endif
+                                                @endfor
+                                                <li><span>{{ number_format($averageRating, 1) }} Review(s)</span></li>
+                                            </ul>
                                                 <div class="price">
                                                     <span>${{ number_format($product->price, 2) }}</span>
                                                     @if ($product->compare_price && $product->compare_price > $product->price)
@@ -273,16 +277,20 @@
                                                         <h4 class="title">
                                                             <a href="{{ route('product-details', ['product' => $product->id]) }}">{{ $product->name }}</a>
                                                         </h4>
-                                                        <ul class="review">
-                                                            @for ($i = 1; $i <= 5; $i++)
-                                                                @if ($i <= $product->rating)
-                                                                    <li><i class="lni lni-star-filled"></i></li>
-                                                                @else
-                                                                    <li><i class="lni lni-star"></i></li>
-                                                                @endif
-                                                            @endfor
-                                                            <li><span>{{ number_format($product->rating, 1) }} Review(s)</span></li>
-                                                        </ul>
+                                                        @php
+                                                        $averageRating = $product->reviews->avg('rating');
+                                                    @endphp
+
+                                                    <ul class="review">
+                                                        @for ($i = 1; $i <= 5; $i++)
+                                                            @if ($i <= $averageRating)
+                                                                <li><i class="lni lni-star-filled"></i></li>
+                                                            @else
+                                                                <li><i class="lni lni-star"></i></li>
+                                                            @endif
+                                                        @endfor
+                                                        <li><span>{{ number_format($averageRating, 1) }} Review(s)</span></li>
+                                                    </ul>
                                                         <div class="price">
                                                             <span>{{ $product->price }}</span>
                                                             <span class="discount-price">{{ $product->compare_price }}</span>

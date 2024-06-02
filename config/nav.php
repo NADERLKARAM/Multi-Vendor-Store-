@@ -29,6 +29,14 @@ return [
         'active' => 'orders.*',
         'ability' => 'orders.view',
     ],
+
+    [
+        'icon' => 'fas fa-receipt nav-icon',
+        'route' => 'brands.index',
+        'title' => 'brands',
+        'active' => 'brands.*',
+        'ability' => 'brands.view',
+    ],
     // [
     //     'icon' => 'fas fa-shield nav-icon',
     //     'route' => 'roles.index',

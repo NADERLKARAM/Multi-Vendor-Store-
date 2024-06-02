@@ -73,16 +73,20 @@
                         <h4 class="title">
                             <a href="{{ route('product-details', ['product' => $product->id]) }}">{{ $product->name }}</a>
                         </h4>
-                        <ul class="review">
-                            @for ($i = 1; $i <= 5; $i++)
-                                @if ($i <= $product->rating)
-                                    <li><i class="lni lni-star-filled"></i></li>
-                                @else
-                                    <li><i class="lni lni-star"></i></li>
-                                @endif
-                            @endfor
-                            <li><span>{{ number_format($product->rating, 1) }} Review(s)</span></li>
-                        </ul>
+                    @php
+                        $averageRating = $product->reviews->avg('rating');
+                    @endphp
+
+                    <ul class="review">
+                        @for ($i = 1; $i <= 5; $i++)
+                            @if ($i <= $averageRating)
+                                <li><i class="lni lni-star-filled"></i></li>
+                            @else
+                                <li><i class="lni lni-star"></i></li>
+                            @endif
+                        @endfor
+                        <li><span>{{ number_format($averageRating, 1) }} Review(s)</span></li>
+                    </ul>
                         <div class="price">
                             <span>${{ $product->price }}</span>
                         </div>
@@ -314,7 +318,7 @@
                 </div>
                 <div class="col-lg-4 col-md-4 col-12">
                     <h4 class="list-title">Top Rated</h4>
-                    @foreach ($topRatedProducts as $product)
+                    @foreach ($topRatedProducts->take(3) as $product)
                         <div class="single-list">
                             <div class="list-image">
                                 <a href="{{ route('product-details', ['product' => $product->id]) }}">

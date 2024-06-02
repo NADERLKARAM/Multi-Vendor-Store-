@@ -67,6 +67,7 @@
                     <div class="col-lg-6 col-md-12 col-12">
                         <div class="product-info">
                             <h2 class="title">{{ $product->name }}</h2>
+                            
                             <p class="category">
                                 <i class="lni lni-tag"></i>
                                 @if ($product->category)
@@ -75,6 +76,7 @@
                                     No category assigned
                                 @endif
                             </p>
+
                             <h3 class="price">{{ Currency::format($product->price) }}@if($product->compare_price)<span>{{ Currency::format($product->compare_price) }}</span>@endif</h3>
                             <p class="info-text">{{ $product->description }}</p>
                             <form action="{{ route('cart.store') }}" method="post">
@@ -100,16 +102,6 @@
                                                 <input type="checkbox" id="checkbox-4">
                                                 <label for="checkbox-4"><span></span></label>
                                             </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4 col-md-4 col-12">
-                                        <div class="form-group">
-                                            <label for="color">Battery capacity</label>
-                                            <select class="form-control" id="color">
-                                                <option>5100 mAh</option>
-                                                <option>6200 mAh</option>
-                                                <option>8000 mAh</option>
-                                            </select>
                                         </div>
                                     </div>
                                     <div class="col-lg-4 col-md-4 col-12">

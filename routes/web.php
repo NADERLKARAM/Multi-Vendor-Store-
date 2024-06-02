@@ -13,6 +13,7 @@ use App\Http\Controllers\Front\CheckoutController;
 use App\Http\Controllers\Front\CartController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HeroSectionController;
+use App\Http\Controllers\Dashboard\BrandController;
 
 use App\Http\Controllers\Auth\SocialLoginController;
 use App\Http\Controllers\SocialController;
@@ -58,9 +59,14 @@ Route::get('admin/dashboard', [DashboardController::class, 'index'])
     ->name('dashboard');
 
 
+
+
+
     Route::middleware(['auth', 'checkRole:admin,superAdmin'])->group(function () {
         Route::resource('products', ProductController::class);
+        Route::resource('brands', BrandController::class);
     });
+
 
 
     Route::resource('cart', CartController::class);
@@ -118,6 +124,8 @@ Route::get('orders/{order}/pay/stripe/callback', [PaymentsController::class, 'co
     });
 
     Route::get('/wishlist/count', [WishlistController::class, 'count'])->name('wishlist.count');
+
+
 
 
 
