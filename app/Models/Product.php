@@ -38,6 +38,11 @@ class Product extends Model
     }
 
 
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
+    }
+
     public function save(array $options = [])
     {
         // Generate the slug based on the product name if it's not already set

@@ -11,11 +11,10 @@ use Illuminate\Support\Facades\DB;
 
 class FProductController extends Controller
 {
-    public function index()
+    public function index($productId)
     {
-        // Retrieve all products from the database
-        $products = Product::all();
-
+         // Retrieve the product along with its reviews
+         $products = Product::with('reviews')->findOrFail($productId);
 
         // Pass the products to the view
         return view('front.products.index', compact('products'));
@@ -130,5 +129,22 @@ class FProductController extends Controller
 
         // Pass the data to the view
         return view('front.products.index', compact('products', 'categories', 'query', 'priceRanges'));
+    }
+
+
+
+    public function storeReview(Request $request, Product $product)
+    {
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255',
+            'subject' => 'required|string|max:255',
+            'rating' => 'required|integer|min:1|max:5',
+            'message' => 'required|string',
+        ]);
+
+        $product->reviews()->create($validated);
+
+        return redirect()->route('product-details', ['product' => $product->id])->with('success', 'Review submitted successfully');
     }
 }

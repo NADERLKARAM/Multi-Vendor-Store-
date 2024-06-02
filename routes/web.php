@@ -40,6 +40,7 @@ Route::group([
 Route::get('/', [HomeController::class, 'index']);
 
 Route::get('/product-details/{product}', [FProductController::class, 'show'])->name('product-details');
+Route::post('/product-details/{product}/reviews', [FProductController::class, 'storeReview'])->name('products.reviews.store');
 
 
 // Categories routes
@@ -117,6 +118,8 @@ Route::get('orders/{order}/pay/stripe/callback', [PaymentsController::class, 'co
     });
 
     Route::get('/wishlist/count', [WishlistController::class, 'count'])->name('wishlist.count');
+
+
 
 // require __DIR__.'/auth.php';
 });

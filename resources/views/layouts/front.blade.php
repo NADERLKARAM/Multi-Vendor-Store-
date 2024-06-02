@@ -9,6 +9,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="shortcut icon" type="image/x-icon" href="{{ asset('assets/images/favicon.svg') }}" />
 
+        <!-- Meta tags, CSS links, etc. -->
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
     <!-- ========================= CSS here ========================= -->
     <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/css/LineIcons.3.0.css') }}" />
@@ -258,8 +261,8 @@
                                             <li class="nav-item"><a href="product-grids.html">Shop Grid</a></li>
                                             <li class="nav-item"><a href="product-list.html">Shop List</a></li>
                                             <li class="nav-item"><a href="product-details.html">shop Single</a></li>
-                                            <li class="nav-item"><a href="{{ route('cart.index') }}">Cart</a></li>
-                                            <li class="nav-item"><a href="{{ route('checkout') }}">Checkout</a></li>
+                                            <li class="nav-item"><a href="{{ route('cart.index') }}">{{ __('Cart') }}</a></li>
+                                            <li class="nav-item"><a href="{{ route('checkout') }}">{{ __('Checkout') }}</a></li>
                                         </ul>
                                     </li>
 
