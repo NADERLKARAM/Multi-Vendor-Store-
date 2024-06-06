@@ -75,14 +75,23 @@
 <!-- Start Single Widget -->
 <div class="single-widget condition">
     <h3>Filter by Brand</h3>
-    @foreach($brands as $brand)
-    <div class="form-check">
-        <input class="form-check-input" type="checkbox" value="{{ $brand->id }}" id="brand_{{ $brand->id }}">
-        <label class="form-check-label" for="brand_{{ $brand->id }}">
-            {{ $brand->name }} ({{ $brand->products()->count() }})
-        </label>
-    </div>
-    @endforeach
+    <form action="{{ isset($category_id) ? route('products.byCategory', ['category_id' => $category_id]) : '#' }}" method="GET">
+
+        @foreach($brands as $brand)
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="{{ $brand->id }}" id="brand_{{ $brand->id }}" name="brands[]">
+            <!-- Each brand is represented as a checkbox -->
+
+            <label class="form-check-label" for="brand_{{ $brand->id }}">
+                {{ $brand->name }} ({{ $brand->products()->count() }})
+                <!-- Display brand name and the count of products associated with it -->
+            </label>
+        </div>
+        @endforeach
+
+        <button type="submit" class="btn btn-primary">Apply Filter</button>
+        <!-- Button to submit the form and apply the selected filters -->
+    </form>
 </div>
 <!-- End Single Widget -->
 

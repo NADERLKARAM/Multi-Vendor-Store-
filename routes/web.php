@@ -131,6 +131,8 @@ Route::get('/contact', [ContactController::class, 'create']);
 Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
 
 
+Route::get('/products/filter', [ProductController::class,'filter'])->name('products.filter');
+
 
 
 

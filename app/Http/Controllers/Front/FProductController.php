@@ -24,6 +24,8 @@ class FProductController extends Controller
         return view('front.products.index', compact('products','brands'));
     }
 
+
+
     public function show(Product $product)
     {
 
@@ -46,6 +48,11 @@ class FProductController extends Controller
             $query->whereBetween('price', [$priceRange[0], $priceRange[1]]);
         }
 
+        // Filter by selected brands
+        if ($request->filled('brands')) {
+            $query->whereIn('brand_id', $request->input('brands'));
+        }
+
         // Paginate the results
         $products = $query->paginate(6);
 
@@ -55,13 +62,11 @@ class FProductController extends Controller
         // Calculate price ranges
         $priceRanges = $this->calculatePriceRanges();
 
+        // Retrieve brands from the database
+        $brands = Brand::all();
 
-           // Retrieve brands from the database
-           $brands = Brand::all();
-
-
-        // Pass the data to the view
-        return view('front.products.index', compact('products', 'categories', 'priceRanges', 'category_id','brands'));
+        // Pass the data to the view, including the brand filtering HTML code
+        return view('front.products.index', compact('products', 'categories', 'priceRanges', 'category_id', 'brands'));
     }
 
     private function calculatePriceRanges()
