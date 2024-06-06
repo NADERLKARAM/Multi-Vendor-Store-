@@ -55,6 +55,16 @@
                                 </select>
                             </div>
 
+                            <div class="mb-3">
+                                <label for="brand_id" class="form-label">Brand</label>
+                                <select class="form-control" id="brand_id" name="brand_id">
+                                    <option value="">Select Brand</option>
+                                    @foreach($brands as $brand)
+                                        <option value="{{ $brand->id }}" {{ $brand->id == $product->brand_id ? 'selected' : '' }}>{{ $brand->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+
                             <!-- Name -->
                             <div class="form-group">
                                 <label for="name">Name:</label>

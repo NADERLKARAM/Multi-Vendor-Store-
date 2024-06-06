@@ -9,6 +9,7 @@ use App\Models\Category;
 use App\Models\Store;
 use Illuminate\Http\Request;
 use App\Models\Product;
+use App\Models\Brand;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 
@@ -46,7 +47,9 @@ class ProductController extends Controller
         $categories = Category::all();
     $stores = Store::all();
 
-    return view('dashboard.products.create', compact('categories', 'stores'));
+    $brands = Brand::all();
+
+    return view('dashboard.products.create', compact('categories', 'stores','brands'));
     }
 
 
@@ -67,6 +70,7 @@ class ProductController extends Controller
         $product->store_id = $validatedData['store_id'];
         $product->category_id = $validatedData['category_id'];
         $product->name = $validatedData['name'];
+        $product->brand_id = $validatedData['brand_id'];
         $product->slug = Str::slug($validatedData['name']);
         $product->description = $validatedData['description'];
         $product->image = $imagePath;
@@ -98,8 +102,9 @@ class ProductController extends Controller
     $categories = Category::all();
     $stores = Store::all();
 
+    $brands = Brand::all();
     // Pass the product and other data to the view
-    return view('dashboard.products.edit', compact('product', 'categories', 'stores'));
+    return view('dashboard.products.edit', compact('product', 'categories', 'stores','brands'));
 
     }
 
@@ -115,6 +120,7 @@ class ProductController extends Controller
         $product->name = $validatedData['name'];
         $product->slug = Str::slug($validatedData['name']);
         $product->description = $validatedData['description'];
+        $product->brand_id = $validatedData['brand_id'];
         $product->price = $validatedData['price'];
         $product->compare_price = $validatedData['compare_price'];
         $product->options = $validatedData['options'];

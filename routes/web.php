@@ -4,6 +4,7 @@ use App\Http\Controllers\Dashboard\CategoriesController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Dashboard\ProductController;
 use App\Http\Controllers\Front\Auth\TwoFactorAuthentcationController;
+use App\Http\Controllers\Front\ContactController;
 use App\Http\Controllers\Front\OrdersController;
 use App\Http\Controllers\Front\PaymentsController;
 use App\Http\Controllers\ProfileController;
@@ -124,6 +125,10 @@ Route::get('orders/{order}/pay/stripe/callback', [PaymentsController::class, 'co
     });
 
     Route::get('/wishlist/count', [WishlistController::class, 'count'])->name('wishlist.count');
+
+
+Route::get('/contact', [ContactController::class, 'create']);
+Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
 
 
 

@@ -84,7 +84,7 @@
                             <ul class="useful-links">
                                 <li><a href="/">{{ trans('Home') }}</a></li>
                                 <li><a href="about-us.html">@lang('About Us')</a></li>
-                                <li><a href="contact.html">{{ __('Contact Us') }}</a></li>
+                                <li><a href="contact">{{ __('Contact Us') }}</a></li>
                             </ul>
                         </div>
                     </div>
@@ -267,7 +267,7 @@
                                     </li>
 
                                     <li class="nav-item">
-                                        <a href="contact.html" aria-label="Toggle navigation">{{ __('Contact Us') }}</a>
+                                        <a href="contact" aria-label="Toggle navigation">{{ __('Contact Us') }}</a>
                                     </li>
                                 </ul>
                             </div> <!-- navbar collapse -->
@@ -392,7 +392,7 @@
                                 <h3>Information</h3>
                                 <ul>
                                     <li><a href="javascript:void(0)">About Us</a></li>
-                                    <li><a href="javascript:void(0)">Contact Us</a></li>
+                                    <li><a href="contact">Contact Us</a></li>
                                     <li><a href="javascript:void(0)">Downloads</a></li>
                                     <li><a href="javascript:void(0)">Sitemap</a></li>
                                     <li><a href="javascript:void(0)">FAQs Page</a></li>

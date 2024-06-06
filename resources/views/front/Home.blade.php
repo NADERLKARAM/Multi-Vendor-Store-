@@ -339,7 +339,7 @@
     </section>
     <!-- End Home Product List -->
 
-    <!-- Start Brands Area -->
+    {{-- !-- Start Brands Area --> --}}
     <div class="brands">
         <div class="container">
             <div class="row">
@@ -349,36 +349,20 @@
             </div>
             <div class="brands-logo-wrapper">
                 <div class="brands-logo-carousel d-flex align-items-center justify-content-between">
-                    <div class="brand-logo">
-                        <img src="https://via.placeholder.com/220x160" alt="#">
-                    </div>
-                    <div class="brand-logo">
-                        <img src="https://via.placeholder.com/220x160" alt="#">
-                    </div>
-                    <div class="brand-logo">
-                        <img src="https://via.placeholder.com/220x160" alt="#">
-                    </div>
-                    <div class="brand-logo">
-                        <img src="https://via.placeholder.com/220x160" alt="#">
-                    </div>
-                    <div class="brand-logo">
-                        <img src="https://via.placeholder.com/220x160" alt="#">
-                    </div>
-                    <div class="brand-logo">
-                        <img src="https://via.placeholder.com/220x160" alt="#">
-                    </div>
-                    <div class="brand-logo">
-                        <img src="https://via.placeholder.com/220x160" alt="#">
-                    </div>
-                    <div class="brand-logo">
-                        <img src="https://via.placeholder.com/220x160" alt="#">
-                    </div>
+                    @foreach($brands as $brand)
+                        <div class="brand-logo">
+                            @if($brand->image)
+                                <img src="{{ asset('storage/' . $brand->image) }}" alt="{{ $brand->name }}">
+                            @else
+                                <img src="https://via.placeholder.com/220x160" alt="Placeholder">
+                            @endif
+                        </div>
+                    @endforeach
                 </div>
             </div>
         </div>
     </div>
     <!-- End Brands Area -->
-
 
 
 

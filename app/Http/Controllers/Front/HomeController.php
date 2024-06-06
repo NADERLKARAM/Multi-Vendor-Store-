@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Front;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\Brand;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -34,8 +35,11 @@ $topRatedProducts = Product::withCount('reviews')
         // Fetch the latest products
         $newArrivals = Product::orderBy('created_at', 'desc')->take(3)->get();
 
+    //    Brands
+        $brands = Brand::orderBy('name', 'desc')->take(10)->get();
 
-        return view('front.Home', compact('products', 'categories', 'bestSellingProducts', 'topRatedProducts', 'newArrivals'));
+
+        return view('front.Home', compact('products', 'categories', 'bestSellingProducts', 'topRatedProducts', 'newArrivals','brands'));
     }
 
     public function create()

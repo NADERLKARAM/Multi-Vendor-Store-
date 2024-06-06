@@ -23,6 +23,7 @@ class UpdateProductRequest extends FormRequest
             'compare_price' => 'nullable|numeric|min:0',
             'options' => 'nullable|json',
             'rating' => 'nullable|numeric|min:0|max:5',
+            'brand_id' => 'nullable|exists:brands,id',
             'featured' => 'nullable|boolean',
             'status' => 'nullable|in:active,draft,archived',
         ];

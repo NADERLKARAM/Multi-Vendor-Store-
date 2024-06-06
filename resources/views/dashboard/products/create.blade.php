@@ -65,6 +65,16 @@
                                 <input type="text" class="form-control" name="name" id="name" value="{{ old('name') }}" required>
                             </div>
 
+                            <div class="mb-3">
+                                <label for="brand_id" class="form-label">Brand</label>
+                                <select class="form-control" id="brand_id" name="brand_id">
+                                    <option value="">Select Brand</option>
+                                    @foreach($brands as $brand)
+                                        <option value="{{ $brand->id }}">{{ $brand->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+
                             <!-- Description -->
                             <div class="form-group">
                                 <label for="description">Description:</label>

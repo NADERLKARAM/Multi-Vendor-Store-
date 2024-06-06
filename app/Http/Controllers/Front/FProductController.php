@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Front;
 
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\Brand;
 use App\Models\Wishlist;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -16,12 +17,17 @@ class FProductController extends Controller
          // Retrieve the product along with its reviews
          $products = Product::with('reviews')->findOrFail($productId);
 
+          // Retrieve brands from the database
+           $brands = Brand::all();
+
         // Pass the products to the view
-        return view('front.products.index', compact('products'));
+        return view('front.products.index', compact('products','brands'));
     }
 
     public function show(Product $product)
     {
+
+
         return view('front.products.show', compact('product'));
     }
 
@@ -49,8 +55,13 @@ class FProductController extends Controller
         // Calculate price ranges
         $priceRanges = $this->calculatePriceRanges();
 
+
+           // Retrieve brands from the database
+           $brands = Brand::all();
+
+
         // Pass the data to the view
-        return view('front.products.index', compact('products', 'categories', 'priceRanges', 'category_id'));
+        return view('front.products.index', compact('products', 'categories', 'priceRanges', 'category_id','brands'));
     }
 
     private function calculatePriceRanges()
@@ -127,8 +138,11 @@ class FProductController extends Controller
         // Calculate price ranges
         $priceRanges = $this->calculatePriceRanges();
 
+         // Retrieve brands from the database
+         $brands = Brand::all();
+
         // Pass the data to the view
-        return view('front.products.index', compact('products', 'categories', 'query', 'priceRanges'));
+        return view('front.products.index', compact('products', 'categories', 'query', 'priceRanges','brands'));
     }
 
 
