@@ -83,8 +83,7 @@
                         <div class="top-middle">
                             <ul class="useful-links">
                                 <li><a href="/">{{ trans('Home') }}</a></li>
-                                <li><a href="about-us.html">@lang('About Us')</a></li>
-                                <li><a href="contact">{{ __('Contact Us') }}</a></li>
+                                <li><a href="/contact">{{ __('Contact Us') }}</a></li>
                             </ul>
                         </div>
                     </div>
@@ -247,7 +246,6 @@
                                             aria-controls="navbarSupportedContent" aria-expanded="false"
                                             aria-label="Toggle navigation">{{ __('Pages') }}</a>
                                         <ul class="sub-menu collapse" id="submenu-1-2">
-                                            <li class="nav-item"><a href="about-us.html">About Us</a></li>
                                             <li class="nav-item active"><a href="{{ route('login') }}">{{ Lang::get('Sign In') }}</a></li>
                                             <li class="nav-item"><a href="{{ route('register') }}">{{ __('Register') }}</a></li>
 
@@ -267,7 +265,7 @@
                                     </li>
 
                                     <li class="nav-item">
-                                        <a href="contact" aria-label="Toggle navigation">{{ __('Contact Us') }}</a>
+                                        <a href="/contact" aria-label="Toggle navigation">{{ __('Contact Us') }}</a>
                                     </li>
                                 </ul>
                             </div> <!-- navbar collapse -->
@@ -391,8 +389,8 @@
                             <div class="single-footer f-link">
                                 <h3>Information</h3>
                                 <ul>
-                                    <li><a href="javascript:void(0)">About Us</a></li>
-                                    <li><a href="contact">Contact Us</a></li>
+
+                                    <li><a href="/contact">{{ __('Contact Us') }}</a></li>
                                     <li><a href="javascript:void(0)">Downloads</a></li>
                                     <li><a href="javascript:void(0)">Sitemap</a></li>
                                     <li><a href="javascript:void(0)">FAQs Page</a></li>
