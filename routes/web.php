@@ -5,6 +5,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Dashboard\ProductController;
 use App\Http\Controllers\Front\Auth\TwoFactorAuthentcationController;
 use App\Http\Controllers\Front\ContactController;
+use App\Http\Controllers\Front\CurrencyConverterController;
 use App\Http\Controllers\Front\OrdersController;
 use App\Http\Controllers\Front\PaymentsController;
 use App\Http\Controllers\ProfileController;
@@ -44,6 +45,8 @@ Route::get('/', [HomeController::class, 'index']);
 Route::get('/product-details/{product}', [FProductController::class, 'show'])->name('product-details');
 Route::post('/product-details/{product}/reviews', [FProductController::class, 'storeReview'])->name('products.reviews.store');
 
+Route::post('/currency', [CurrencyConverterController::class, 'store'])
+->name('currency.store');
 
 // Categories routes
 Route::middleware(['auth', 'checkRole:admin,superAdmin'])->group(function () {
