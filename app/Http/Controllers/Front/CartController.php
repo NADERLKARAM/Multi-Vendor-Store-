@@ -60,9 +60,6 @@ class CartController extends Controller
     public function destroy($id)
     {
         $this->cart->delete($id);
-
-        return [
-            'message' => 'Item deleted!',
-        ];
+        return redirect()->route('cart.index')->with('success', 'Item removed from cart!');
     }
 }
