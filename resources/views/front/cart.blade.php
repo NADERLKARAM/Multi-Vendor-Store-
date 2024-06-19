@@ -1,5 +1,6 @@
 @extends('front.front_layouts.master')
 
+
 @section('content')
 
     <!-- Start Breadcrumbs -->
@@ -30,7 +31,9 @@
                 <!-- Cart List Title -->
                 <div class="cart-list-title">
                     <div class="row">
-                        <div class="col-lg-1 col-md-1 col-12"></div>
+                        <div class="col-lg-1 col-md-1 col-12">
+
+                        </div>
                         <div class="col-lg-4 col-md-3 col-12">
                             <p>Product Name</p>
                         </div>
@@ -43,12 +46,20 @@
                         <div class="col-lg-2 col-md-2 col-12">
                             <p>Discount</p>
                         </div>
+                        @foreach($cart as $cartItem)
+                        <div class="row">
+                            <!-- Other columns -->
+                            <div class="col-lg-1 col-md-2 col-12">
+                                <a href="{{ route('cart.destroy', ['cart' => $cartItem->id]) }}">Remove</a>
+                            </div>
+                        </div>
+                    @endforeach
                     </div>
                 </div>
                 <!-- End Cart List Title -->
-
                 <!-- Cart Single List list -->
                 @foreach ($cart->get() as $item)
+
                 <div class="cart-single-list" id="{{ $item->id }}">
                     <div class="row align-items-center">
                         <div class="col-lg-1 col-md-1 col-12">
@@ -56,11 +67,8 @@
                                 <img src="{{ asset('storage/' . $item->product->image) }}" alt="#"></a>
                         </div>
                         <div class="col-lg-4 col-md-3 col-12">
-                            <h5 class="product-name">
-                                <a href="{{ route('product-details', ['product' => $item->product->id]) }}">
-                                    {{ $item->product->name }}
-                                </a>
-                            </h5>
+                            <h5 class="product-name"><a href="{{ route('product-details', ['product' => $item->product->id]) }}">
+                                    {{ $item->product->name }}</a></h5>
                             <p class="product-des">
                                 <span><em>Type:</em> Mirrorless</span>
                                 <span><em>Color:</em> Black</span>
@@ -68,11 +76,7 @@
                         </div>
                         <div class="col-lg-2 col-md-2 col-12">
                             <div class="count-input">
-                                <form action="{{ route('cart.update', ['cart' => $item->id]) }}" method="POST">
-                                    @csrf
-                                    @method('PUT')
-                                    <input class="form-control item-quantity" name="quantity" value="{{ $item->quantity }}" onchange="this.form.submit()">
-                                </form>
+                                <input class="form-control item-quantity" data-id="{{ $item->id }}" value="{{ $item->quantity }}">
                             </div>
                         </div>
                         <div class="col-lg-2 col-md-2 col-12">
@@ -82,14 +86,11 @@
                             <p>{{ Currency::format(0) }}</p>
                         </div>
                         <div class="col-lg-1 col-md-2 col-12">
-                            <form action="{{ route('cart.destroy', ['cart' => $item->id]) }}" method="POST" style="display:inline;">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-danger btn-sm">Remove</button>
-                            </form>
+                            <a class="remove-item" data-id="{{ $item->id }}" href="javascript:void(0)"><i class="lni lni-close"></i></a>
                         </div>
                     </div>
                 </div>
+
                 @endforeach
                 <!-- End Single List list -->
             </div>
@@ -132,5 +133,12 @@
         </div>
     </div>
     <!--/ End Shopping Cart -->
+
+<script>
+    const csrf_token = "{{ csrf_token() }}";
+</script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="{{ asset('js/cart.js') }}"></script>
+
 
 @endsection
